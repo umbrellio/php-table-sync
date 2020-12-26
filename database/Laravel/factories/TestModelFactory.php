@@ -13,6 +13,6 @@ $factory->define(TestModel::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(TestModelWithExceptedFields::class, function (Faker $faker) use ($factory) {
+$factory->define(TestModelWithExceptedFields::class, function () use ($factory) {
     return $factory->raw(TestModel::class);
 });

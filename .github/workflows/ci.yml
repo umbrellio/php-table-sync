@@ -69,7 +69,7 @@ jobs:
         operating_system: [ubuntu-latest]
         postgres: ['11']
         laravel: ['^6.0', '^7.0', '^8.0']
-        php_versions: ['7.2', '7.3', '7.4']
+        php_versions: ['7.3', '7.4']
         include:
           - operating_system: ubuntu-latest
             postgres: '11'
@@ -78,7 +78,7 @@ jobs:
             laravel: '^8.0'
             coverage: true
           - operating_system: ubuntu-latest
-            postgres: '11'
+            postgres: '12'
             php_versions: '8.0'
             laravel: '^8.0'
             experimental: true

@@ -1,0 +1,10 @@
+{
+  "linters" : {
+    "ecs" : {
+      "type" : "ecs",
+      "include" : "(\\.php)",
+      "exclude": "(^\\.arc_utils/)",
+      "bin": "vendor/bin/ecs"
+    }
+  }
+}

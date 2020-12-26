@@ -1,19 +1,19 @@
 # PHP TableSync
+
 ###### PHP's implementation of the library providing data synchronization between microservices
 
+[![Github Status](https://github.com/umbrellio/php-table-sync/workflows/CI/badge.svg)](https://github.com/umbrellio/php-table-sync/actions)
+[![Coverage Status](https://coveralls.io/repos/github/umbrellio/php-table-sync/badge.svg?branch=master)](https://coveralls.io/github/umbrellio/php-table-sync?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/umbrellio/php-table-sync/v/stable.png)](https://packagist.org/packages/umbrellio/php-table-sync)
+[![Total Downloads](https://poser.pugx.org/umbrellio/php-table-sync/downloads.png)](https://packagist.org/packages/umbrellio/php-table-sync)
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/umbrellio/php-table-sync/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
+[![Build Status](https://scrutinizer-ci.com/g/umbrellio/php-table-sync/badges/build.png?b=master)](https://scrutinizer-ci.com/g/umbrellio/php-table-sync/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/umbrellio/php-table-sync/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/umbrellio/php-table-sync/?branch=master)
+
+
 ## Installation
-First you need to add the repository in the `composer.json` file
 ```
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "git@gitlab.task4work.info:common-libs/php-table-sync.git"
-    }
-]
-```
-Installation can be done with composer
-```
-composer require common-libs/php-table-sync
+compose require umbrellio/php-table-sync
 ```
 
 ## Usage
@@ -41,6 +41,7 @@ User extends Model implements SyncableModel
     }
 ...
 ```
+
 When the model changes, the data will be sent according to the rules of `TableSyncObserver`, to get the data you need to run the command `table_sync:work`
 
 ## Logging
@@ -85,3 +86,11 @@ Logging based on the Monolog package and contains some extensions for it.
 ],
 ...
 ```
+
+## Authors
+
+Created by Korben Dallas.
+
+<a href="https://github.com/umbrellio/">
+<img style="float: left;" src="https://umbrellio.github.io/Umbrellio/supported_by_umbrellio.svg" alt="Supported by Umbrellio" width="439" height="72">
+</a>

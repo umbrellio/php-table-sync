@@ -1,0 +1,37 @@
+type:build:
+  - ".github/**/*"
+  - ".coveralls.yml"
+  - "phpunit.github.xml"
+  - ".gitignore"
+  - "ecs.yml"
+
+dependencies:
+  - "composer.json"
+  - "composer.lock"
+
+type:integration:
+  - "src/Integration/**/*"
+
+type:messages:
+  - "src/Messages/**/*"
+
+type:monolog:
+  - "src/Monolog/**/*"
+
+type:rabbit:
+  - "src/Rabbit/**/*"
+
+type:common:
+  - "src/Publisher.php"
+  - "src/ReceivedMessageHandler.php"
+
+type:tests:
+  - 'tests/**/*'
+  - 'phpunit.xml.dist'
+  - 'tests.sh'
+
+theme:docs:
+  - "README.md"
+  - "LICENSE"
+  - "CONTRIBUTING.md"
+  - "CODE_OF_CONDUCT.md"

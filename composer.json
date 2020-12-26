@@ -1,5 +1,5 @@
 {
-    "name": "umbrellio/table-sync-php",
+    "name": "umbrellio/php-table-sync",
     "description": "PHP's implementation of the library providing data synchronization between microservices",
     "keywords": [
         "php",

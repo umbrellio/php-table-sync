@@ -41,7 +41,9 @@ class EnsureConsistencyPublisherTest extends LaravelTestCase
         $this->spyPublisher->shouldSkip = false;
 
         $publisher = new EnsureConsistencyPublisher($this->spyPublisher);
-        $publisher->publish(new PublishMessage(TestModel::class, 'test', 'test_key', ['id' => $testModel->id]));
+        $publisher->publish(new PublishMessage(TestModel::class, 'test', 'test_key', [
+            'id' => $testModel->id,
+        ]));
 
         $this->assertNotEmpty($this->spyPublisher->messages);
     }
@@ -52,7 +54,9 @@ class EnsureConsistencyPublisherTest extends LaravelTestCase
     public function notPublishIfRecordNotExistsAndNotDestroyed(): void
     {
         $publisher = new EnsureConsistencyPublisher($this->spyPublisher);
-        $publisher->publish(new PublishMessage(TestModel::class, 'updated', 'test_key', ['id' => 100]));
+        $publisher->publish(new PublishMessage(TestModel::class, 'updated', 'test_key', [
+            'id' => 100,
+        ]));
 
         $this->assertEmpty($this->spyPublisher->messages);
     }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Tests\unit\Rabbit\Config;
 
-use Umbrellio\TableSync\Tests\UnitTestCase;
 use Umbrellio\TableSync\Rabbit\Config\Publisher as Config;
+use Umbrellio\TableSync\Tests\UnitTestCase;
 
 class PublishTest extends UnitTestCase
 {

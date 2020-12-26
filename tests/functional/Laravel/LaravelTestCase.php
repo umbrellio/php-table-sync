@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Umbrellio\TableSync\Tests\functional\Laravel;
 
-use Umbrellio\TableSync\Tests\FunctionalTestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase;
 

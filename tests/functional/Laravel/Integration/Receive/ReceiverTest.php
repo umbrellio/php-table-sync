@@ -21,7 +21,8 @@ class ReceiverTest extends LaravelTestCase
         $receiver = new Receiver($messageDataRetreiver);
 
         $message = $this->createMock(ReceivedMessage::class);
-        $message->method('getEvent')->willReturn('test_event');
+        $message->method('getEvent')
+            ->willReturn('test_event');
 
         $this->expectException(UnknownMessageEvent::class);
         $receiver->receive($message);

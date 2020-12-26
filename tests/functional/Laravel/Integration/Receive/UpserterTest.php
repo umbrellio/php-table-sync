@@ -21,6 +21,7 @@ class UpserterTest extends LaravelTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->upserter = new Upserter();
 
         $this->stubPublisher();

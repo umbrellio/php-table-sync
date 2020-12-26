@@ -68,6 +68,8 @@ class Syncer
 
     private function pkAttributes(SyncableModel $model): array
     {
-        return [$model->getKeyName() => $model->getKey()];
+        return [
+            $model->getKeyName() => $model->getKey(),
+        ];
     }
 }

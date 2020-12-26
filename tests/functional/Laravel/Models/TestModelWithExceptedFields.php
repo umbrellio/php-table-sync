@@ -24,7 +24,9 @@ final class TestModelWithExceptedFields extends Model implements SyncableModel
 
     public function getTableSyncableAttributes(): array
     {
-        return array_intersect_key($this->getAttributes(), ['name' => null]);
+        return array_intersect_key($this->getAttributes(), [
+            'name' => null,
+        ]);
     }
 
     public function routingKey()

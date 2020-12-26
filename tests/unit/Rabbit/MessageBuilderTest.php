@@ -6,11 +6,11 @@ namespace Umbrellio\TableSync\Tests\unit\Rabbit;
 
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPTable;
-use Umbrellio\TableSync\Tests\UnitTestCase;
 use Umbrellio\TableSync\Messages\PublishMessage;
 use Umbrellio\TableSync\Rabbit\Config\PublishMessage as Config;
 use Umbrellio\TableSync\Rabbit\MessageBuilder;
 use Umbrellio\TableSync\Tests\_data\Traits\MicrotimeFunctionMockTrait;
+use Umbrellio\TableSync\Tests\UnitTestCase;
 
 class MessageBuilderTest extends UnitTestCase
 {
@@ -24,6 +24,7 @@ class MessageBuilderTest extends UnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->builder = new MessageBuilder(new Config('appId'));
         $this->mockMicrotime();
     }
@@ -126,12 +127,16 @@ class MessageBuilderTest extends UnitTestCase
     public function bodyAttributesByMessage(): void
     {
         $amqpMessage = $this->builder->buildForPublishing(
-            new PublishMessage('class', 'event', 'test_key', ['foo' => 'bar'])
+            new PublishMessage('class', 'event', 'test_key', [
+                'foo' => 'bar',
+            ])
         );
         $body = $this->decodedBodyFromMessage($amqpMessage);
 
         $this->assertSame('class', $body['model']);
-        $this->assertSame(['foo' => 'bar'], $body['attributes']);
+        $this->assertSame([
+            'foo' => 'bar',
+        ], $body['attributes']);
     }
 
     /**
@@ -140,7 +145,9 @@ class MessageBuilderTest extends UnitTestCase
     public function bodyKeys(): void
     {
         $amqpMessage = $this->builder->buildForPublishing(
-            new PublishMessage('class', 'event', 'test_key', ['foo' => 'bar'])
+            new PublishMessage('class', 'event', 'test_key', [
+                'foo' => 'bar',
+            ])
         );
         $body = $this->decodedBodyFromMessage($amqpMessage);
 

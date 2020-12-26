@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Umbrellio\TableSync\Tests\Unit\Logging;
 
 use InfluxDB\Point;
-use Umbrellio\TableSync\Tests\UnitTestCase;
 use Umbrellio\TableSync\Messages\PublishMessage;
 use Umbrellio\TableSync\Monolog\Formatter\InfluxDBFormatter;
 use Umbrellio\TableSync\Monolog\Formatter\LineTableSyncFormatter;
@@ -13,6 +12,7 @@ use Umbrellio\TableSync\Monolog\Formatter\TableSyncFormatter;
 use Umbrellio\TableSync\Rabbit\Config\PublishMessage as Config;
 use Umbrellio\TableSync\Rabbit\MessageBuilder;
 use Umbrellio\TableSync\Tests\_data\Traits\MicrotimeFunctionMockTrait;
+use Umbrellio\TableSync\Tests\UnitTestCase;
 
 class FormatterTest extends UnitTestCase
 {
@@ -21,6 +21,7 @@ class FormatterTest extends UnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->mockMicrotime();
     }
 
@@ -79,7 +80,9 @@ class FormatterTest extends UnitTestCase
 
     private function getDummyRecord(): array
     {
-        $message = new PublishMessage('model', 'event', 'routingKey', ['id' => 1]);
+        $message = new PublishMessage('model', 'event', 'routingKey', [
+            'id' => 1,
+        ]);
         $amqpMessage = (new MessageBuilder(new Config('appId')))->buildForPublishing($message);
 
         return [

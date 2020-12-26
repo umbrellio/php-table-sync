@@ -32,13 +32,13 @@ class Upserter
         $updateColumns = array_diff($columns, $messageData->getTargetKeys());
         $updateSpecString = $this->updateSpec($updateColumns);
 
-        $sql = <<<SQL
+        $sql = <<<CODE_SAMPLE
         INSERT INTO {$messageData->getTable()} ({$columnString}) VALUES {$values}
         ON CONFLICT ({$target}) 
         DO UPDATE 
           SET {$updateSpecString}
           WHERE {$messageData->getTable()}.version < ?
-SQL;
+CODE_SAMPLE;
 
         DB::statement($sql, array_merge($valueBindings, [$version]));
     }

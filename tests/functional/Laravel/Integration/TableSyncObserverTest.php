@@ -6,11 +6,11 @@ namespace Umbrellio\TableSync\Tests\functional\Laravel\Integration;
 
 use Umbrellio\TableSync\Messages\PublishMessage;
 use Umbrellio\TableSync\Publisher;
+use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
 use Umbrellio\TableSync\Tests\functional\Laravel\Models\SoftTestModel;
 use Umbrellio\TableSync\Tests\functional\Laravel\Models\TestModel;
 use Umbrellio\TableSync\Tests\functional\Laravel\Models\TestModelWithExceptedFields;
 use Umbrellio\TableSync\Tests\functional\Laravel\Traits\SpyPublisher;
-use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
 
 class TableSyncObserverTest extends LaravelTestCase
 {
@@ -87,7 +87,9 @@ class TableSyncObserverTest extends LaravelTestCase
         $message = $this->spyPublisher->messages->last();
         $this->assertTrue($message->isDestroyed());
         $this->assertSame(TestModel::class, $message->className());
-        $this->assertSame(['id' => $model->id], $message->attributes());
+        $this->assertSame([
+            'id' => $model->id,
+        ], $message->attributes());
     }
 
     /**
@@ -96,7 +98,9 @@ class TableSyncObserverTest extends LaravelTestCase
     public function softDeletedMessagePublished(): void
     {
         /** @var SoftTestModel $model */
-        $model = factory(SoftTestModel::class)->create(['name' => 'test_name']);
+        $model = factory(SoftTestModel::class)->create([
+            'name' => 'test_name',
+        ]);
         $model->delete();
 
         /** @var PublishMessage $message */
@@ -123,7 +127,9 @@ class TableSyncObserverTest extends LaravelTestCase
         $message = $this->spyPublisher->messages->last();
         $this->assertTrue($message->isDestroyed());
         $this->assertSame(SoftTestModel::class, $message->className());
-        $this->assertSame(['id' => $model->id], $message->attributes());
+        $this->assertSame([
+            'id' => $model->id,
+        ], $message->attributes());
     }
 
     /**
@@ -132,7 +138,9 @@ class TableSyncObserverTest extends LaravelTestCase
     public function restoredMessagePublished(): void
     {
         /** @var SoftTestModel $model */
-        $model = factory(SoftTestModel::class)->create(['name' => 'test_name']);
+        $model = factory(SoftTestModel::class)->create([
+            'name' => 'test_name',
+        ]);
         $model->delete();
         $model->restore();
 
@@ -155,7 +163,9 @@ class TableSyncObserverTest extends LaravelTestCase
     {
         /** @var TestModelWithExceptedFields $model */
         $model = factory(TestModelWithExceptedFields::class)->create();
-        $model->update(['name' => 'new_name']);
+        $model->update([
+            'name' => 'new_name',
+        ]);
 
         /** @var PublishMessage $message */
         $message = $this->spyPublisher->messages->last();
@@ -181,7 +191,9 @@ class TableSyncObserverTest extends LaravelTestCase
 
         $this->spyPublisher->shouldSkip = false;
 
-        $model->update(['some_field' => 'new_field']);
+        $model->update([
+            'some_field' => 'new_field',
+        ]);
 
         $this->assertEmpty($this->spyPublisher->messages);
     }

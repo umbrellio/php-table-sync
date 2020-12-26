@@ -63,15 +63,20 @@ class Consumer
         $messageId = $amqpMessage->delivery_info['delivery_tag'];
 
         try {
-            $this->config->handler()->handle($message);
-            $this->channelContainer->getChannel()->basic_ack($messageId);
+            $this->config->handler()
+                ->handle($message);
+            $this->channelContainer->getChannel()
+                ->basic_ack($messageId);
             $this->logger->info("Message #{$messageId} correctly handled", [
                 'direction' => 'receive',
                 'body' => $amqpMessage->getBody(),
             ]);
         } catch (Throwable $throwable) {
-            $this->logger->debug('Cannot handle message', ['exception' => $throwable]);
-            $this->channelContainer->getChannel()->basic_nack($messageId, false, true);
+            $this->logger->debug('Cannot handle message', [
+                'exception' => $throwable,
+            ]);
+            $this->channelContainer->getChannel()
+                ->basic_nack($messageId, false, true);
         }
     }
 }

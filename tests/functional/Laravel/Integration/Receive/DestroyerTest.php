@@ -22,6 +22,7 @@ class DestroyerTest extends LaravelTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->destroyer = new Destroyer();
 
         $this->stubPublisher();
@@ -35,7 +36,9 @@ class DestroyerTest extends LaravelTestCase
         /** @var TestModel $testModel */
         $testModel = factory(TestModel::class)->create();
 
-        $data = new MessageData($testModel->getTable(), ['id'], [['id' => $testModel->id]]);
+        $data = new MessageData($testModel->getTable(), ['id'], [[
+            'id' => $testModel->id,
+        ]]);
 
         $this->destroyer->destroy($data);
 
@@ -49,7 +52,9 @@ class DestroyerTest extends LaravelTestCase
     {
         $models = factory(TestModel::class, 2)->create();
         $data = $models->map(function (TestModel $model) {
-            return ['id' => $model->id];
+            return [
+                'id' => $model->id,
+            ];
         })->all();
 
         $message = new MessageData($models->first()->getTable(), ['id'], $data);
@@ -67,8 +72,12 @@ class DestroyerTest extends LaravelTestCase
     public function destroyWithSomeAttributes(): void
     {
         /** @var TestModel $destroyedModel */
-        $destroyedModel = factory(TestModel::class)->create(['name' => 'test']);
-        $model = factory(TestModel::class)->create(['name' => 'test']);
+        $destroyedModel = factory(TestModel::class)->create([
+            'name' => 'test',
+        ]);
+        $model = factory(TestModel::class)->create([
+            'name' => 'test',
+        ]);
 
         $message = new MessageData($destroyedModel->getTable(), ['id'], [[
             'id' => $destroyedModel->id,

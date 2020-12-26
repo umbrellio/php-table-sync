@@ -13,6 +13,7 @@ abstract class ProcessManagerCommand extends Command
     public function __construct(PidManager $pidManager)
     {
         parent::__construct();
+
         $this->pidManager = $pidManager;
     }
 }

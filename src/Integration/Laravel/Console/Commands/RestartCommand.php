@@ -16,7 +16,9 @@ class RestartCommand extends ProcessManagerCommand
         if (!$this->pidManager->pidExists()) {
             $this->info('Table sync worker not started.');
         } else {
-            $arguments = $this->option('force') ? ['--force' => true] : [];
+            $arguments = $this->option('force') ? [
+                '--force' => true,
+            ] : [];
 
             $this->call('table_sync:terminate', $arguments);
         }

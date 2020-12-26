@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Tests\unit\Messages;
 
-use Umbrellio\TableSync\Tests\UnitTestCase;
 use Umbrellio\TableSync\Messages\PublishMessage;
+use Umbrellio\TableSync\Tests\UnitTestCase;
 
 class PublishMessageTest extends UnitTestCase
 {
@@ -14,9 +14,13 @@ class PublishMessageTest extends UnitTestCase
      */
     public function parametersFromConstructor(): void
     {
-        $message = new PublishMessage('class', 'event', 'test_key', ['a' => 'b']);
+        $message = new PublishMessage('class', 'event', 'test_key', [
+            'a' => 'b',
+        ]);
         $this->assertSame('class', $message->className());
-        $this->assertSame(['a' => 'b'], $message->attributes());
+        $this->assertSame([
+            'a' => 'b',
+        ], $message->attributes());
         $this->assertSame('test_key', $message->routingKey());
     }
 

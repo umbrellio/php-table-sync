@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Faker\Generator as Faker;
-use Umbrellio\TableSync\Tests\_data\Laravel\Models\TestModel;
-use Umbrellio\TableSync\Tests\_data\Laravel\Models\TestModelWithExceptedFields;
+use Umbrellio\TableSync\Tests\functional\Laravel\Models\TestModel;
+use Umbrellio\TableSync\Tests\functional\Laravel\Models\TestModelWithExceptedFields;
 
 $factory->define(TestModel::class, function (Faker $faker) {
     return [

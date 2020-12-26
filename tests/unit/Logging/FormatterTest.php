@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Umbrellio\TableSync\Tests\Unit\Logging;
 
 use InfluxDB\Point;
-use Umbrellio\LTree\tests\UnitTestCase;
+use Umbrellio\TableSync\Tests\UnitTestCase;
 use Umbrellio\TableSync\Messages\PublishMessage;
 use Umbrellio\TableSync\Monolog\Formatter\InfluxDBFormatter;
 use Umbrellio\TableSync\Monolog\Formatter\LineTableSyncFormatter;

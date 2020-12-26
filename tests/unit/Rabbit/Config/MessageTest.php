@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Umbrellio\TableSync\Tests\unit\Rabbit\Config;
 
 use PhpAmqpLib\Wire\AMQPTable;
-use Umbrellio\LTree\tests\UnitTestCase;
+use Umbrellio\TableSync\Tests\UnitTestCase;
 use Umbrellio\TableSync\Rabbit\Config\PublishMessage as Config;
 
 class MessageTest extends UnitTestCase

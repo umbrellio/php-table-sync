@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Tests\unit\Messages;
 
-use Umbrellio\LTree\tests\UnitTestCase;
+use Umbrellio\TableSync\Tests\UnitTestCase;
 use Umbrellio\TableSync\Messages\PublishMessage;
 
 class PublishMessageTest extends UnitTestCase

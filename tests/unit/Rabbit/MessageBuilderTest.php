@@ -6,7 +6,7 @@ namespace Umbrellio\TableSync\Tests\unit\Rabbit;
 
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPTable;
-use Umbrellio\LTree\tests\UnitTestCase;
+use Umbrellio\TableSync\Tests\UnitTestCase;
 use Umbrellio\TableSync\Messages\PublishMessage;
 use Umbrellio\TableSync\Rabbit\Config\PublishMessage as Config;
 use Umbrellio\TableSync\Rabbit\MessageBuilder;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Tests\functional\Laravel;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase;
 
@@ -15,8 +16,7 @@ abstract class LaravelTestCase extends TestCase
     {
         parent::setUp();
 
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        $this->withFactories(__DIR__ . '/../database/factories');
+        $this->setUpDatabase($this->app);
     }
 
     protected function getEnvironmentSetUp($app): void
@@ -37,6 +37,27 @@ abstract class LaravelTestCase extends TestCase
             'prefix' => '',
             'schema' => 'public',
         ]);
+    }
+
+    /**
+     * @param Application $app
+     */
+    protected function resolveApplicationCore($app): void
+    {
+        parent::resolveApplicationCore($app);
+
+        $app->detectEnvironment(function () {
+            return 'testing';
+        });
+    }
+
+    private function setUpDatabase($app): void
+    {
+        $this->loadLaravelMigrations();
+        $this->loadMigrationsFrom(__DIR__ . '/../../../database/Laravel/migrations');
+        $this->loadFactoriesUsing($app, __DIR__ . '/../../../database/Laravel/factories');
+
+        $this->artisan('migrate');
     }
 
     private function getConnectionParams(): array

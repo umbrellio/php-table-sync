@@ -90,6 +90,7 @@ class ConnectionContainer
             $this->connection->close();
             $this->connection = null;
         } catch (ErrorException $errorException) {
+            // @todo Finish later
         }
     }
 }

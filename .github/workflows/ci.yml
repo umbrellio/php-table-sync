@@ -81,6 +81,12 @@ jobs:
             postgres: '12'
             php_versions: '8.0'
             laravel: '^8.0'
+            experimental: false
+            coverage: false
+          - operating_system: ubuntu-latest
+            postgres: '13'
+            php_versions: '8.0'
+            laravel: '^8.0'
             experimental: true
             coverage: false
     runs-on: '${{ matrix.operating_system }}'

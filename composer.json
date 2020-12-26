@@ -69,7 +69,10 @@
     },
     "extra": {
       "laravel": {
-        "providers": []
+        "providers": [
+            "Umbrellio\\TableSync\\Integration\\Laravel\\TableSyncServiceProvider",
+            "Umbrellio\\TableSync\\Integration\\Laravel\\InfluxDBServiceProvider"
+        ]
       }
     }
 }

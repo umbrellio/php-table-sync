@@ -44,7 +44,8 @@ class ChannelContainer
     public function getChannel(): AMQPChannel
     {
         if (!isset($this->channel)) {
-            $this->channel = $this->connectionContainer->connection()->channel();
+            $this->channel = $this->connectionContainer->connection()
+                ->channel();
             $this->channel->basic_qos(
                 $this->channelOptions['prefetch_size'],
                 $this->channelOptions['prefetch_count'],

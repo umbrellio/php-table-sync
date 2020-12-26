@@ -54,7 +54,8 @@ final class Publisher implements PublisherContract
 
     private function attemptToPublish(PublishMessage $message): void
     {
-        $channel = $this->connectionContainer->connection()->channel();
+        $channel = $this->connectionContainer->connection()
+            ->channel();
 
         $confirmSelect = $this->config->confirmSelect();
         if ($confirmSelect) {

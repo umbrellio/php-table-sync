@@ -13,7 +13,7 @@
     "license": "MIT",
     "type": "library",
     "require": {
-        "php": "^7.2|^7.3|^7.4|^8.0",
+        "php": "^7.3|^7.4|^8.0",
         "ext-json": "*",
         "php-amqplib/php-amqplib": "^2.8",
         "laravel/framework": "^5.8|^6.0|^7.0|^8.0",
@@ -29,7 +29,10 @@
         "orchestra/testbench": "^3.8|^4.8|^5.7|^6.2",
         "mockery/mockery": "^1.0",
         "mikey179/vfsstream": "^1.6",
-        "umbrellio/code-style-php": "^1.0"
+        "umbrellio/code-style-php": "^1.0",
+        "laravel/legacy-factories": "*",
+        "php-coveralls/php-coveralls": "^2.1",
+        "squizlabs/php_codesniffer": "^3.5"
     },
     "authors": [
         {
@@ -41,6 +44,10 @@
             "email": "pvsaintpe@icloud.com"
         }
     ],
+    "support": {
+        "issues": "https://github.com/umbrellio/table_sync_php/issues",
+        "source": "https://github.com/umbrellio/table_sync_php"
+    },
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
@@ -54,10 +61,10 @@
     },
     "scripts": {
         "lint-fix":[
-            "vendor/bin/ecs check src tests -c easy-coding-standard.yml --fix"
+            "vendor/bin/ecs check src tests -c ecs.yml --fix"
         ],
         "test":[
-            "vendor/bin/phpunit --colors=never"
+            "vendor/bin/phpunit"
         ]
     },
     "extra": {

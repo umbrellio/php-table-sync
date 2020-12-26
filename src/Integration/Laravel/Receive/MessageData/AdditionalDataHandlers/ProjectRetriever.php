@@ -12,6 +12,8 @@ final class ProjectRetriever implements AdditionalDataHandler
     public function handle(ReceivedMessage $message, array $data): array
     {
         [, $projectId] = explode('.', $message->getAppId());
-        return array_merge($data, ['project_id' => $projectId]);
+        return array_merge($data, [
+            'project_id' => $projectId,
+        ]);
     }
 }

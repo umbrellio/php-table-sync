@@ -76,8 +76,8 @@ class MessageDataRetriever
 
         $isArray = collect($keys)
             ->every(function ($key) {
-    return is_numeric($key);
-});
+                return is_numeric($key);
+            });
 
         return $isArray ? $attributes : [$attributes];
     }

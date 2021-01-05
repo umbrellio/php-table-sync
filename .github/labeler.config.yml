@@ -4,6 +4,7 @@ type:build:
   - "phpunit.github.xml"
   - ".gitignore"
   - "ecs.yml"
+  - "phpcs.xml"
 
 dependencies:
   - "composer.json"

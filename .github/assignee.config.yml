@@ -4,8 +4,6 @@ numberOfReviewers: 1
 
 reviewers:
  - pvsaitpe
- - vetal
- - zlob
 
 addAssignees: true
 

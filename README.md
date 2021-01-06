@@ -8,6 +8,7 @@
 [![Total Downloads](https://poser.pugx.org/umbrellio/php-table-sync/downloads.png)](https://packagist.org/packages/umbrellio/php-table-sync)
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/umbrellio/php-table-sync/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 [![Build Status](https://scrutinizer-ci.com/g/umbrellio/php-table-sync/badges/build.png?b=master)](https://scrutinizer-ci.com/g/umbrellio/php-table-sync/build-status/master)
+[![Code Coverage](https://scrutinizer-ci.com/g/umbrellio/php-table-sync/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/umbrellio/php-table-sync/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/umbrellio/php-table-sync/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/umbrellio/php-table-sync/?branch=master)
 
 

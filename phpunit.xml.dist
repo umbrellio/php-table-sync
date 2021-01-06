@@ -9,12 +9,14 @@
          stopOnFailure="false"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
 >
-  <coverage processUncoveredFiles="true">
-    <directory suffix=".php">./src</directory>
-    <exclude>
-      <directory suffix=".php">./database</directory>
-    </exclude>
-  </coverage>
+  <filter>
+    <whitelist processUncoveredFilesFromWhitelist="true">
+      <directory suffix=".php">./src</directory>
+      <exclude>
+        <directory suffix=".php">./database</directory>
+      </exclude>
+    </whitelist>
+  </filter>
   <php>
     <env name="APP_ENV" value="testing"/>
     <ini name="error_reporting" value="-1" />

@@ -1,14 +1,12 @@
 type:build:
   - ".github/**/*"
   - ".coveralls.yml"
-  - "phpunit.github.xml"
   - ".gitignore"
   - "ecs.yml"
   - "phpcs.xml"
 
 dependencies:
   - "composer.json"
-  - "composer.lock"
 
 type:integration:
   - "src/Integration/**/*"

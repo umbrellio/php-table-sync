@@ -45,8 +45,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/umbrellio/table_sync_php/issues",
-        "source": "https://github.com/umbrellio/table_sync_php"
+        "issues": "https://github.com/umbrellio/php-table-sync/issues",
+        "source": "https://github.com/umbrellio/php-table-sync"
     },
     "minimum-stability": "stable",
     "autoload": {
@@ -62,9 +62,6 @@
     "scripts": {
         "lint-fix":[
             "vendor/bin/ecs check src tests -c ecs.yml --fix"
-        ],
-        "test":[
-            "vendor/bin/phpunit"
         ]
     },
     "extra": {

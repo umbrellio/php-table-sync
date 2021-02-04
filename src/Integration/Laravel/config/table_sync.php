@@ -52,4 +52,6 @@ return [
     'log' => [
         'channel' => 'table_sync',
     ],
+    'publish_job_queue' => '',
+    'receive_job_queue' => '',
 ];

@@ -60,7 +60,7 @@
     },
     "scripts": {
         "lint-fix":[
-            "vendor/bin/ecs check src tests -c ecs.yml --fix"
+            "vendor/bin/ecs check src tests -c ecs.php --fix"
         ]
     },
     "extra": {

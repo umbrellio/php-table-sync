@@ -17,7 +17,8 @@ class CreateTestModelTable extends Migration
 
                 $table->string('name');
                 $table->string('some_field');
-                $table->float('version')->default(0.0);
+                $table->float('version')
+                    ->default(0.0);
             });
 
             Schema::create('soft_test_models', function (Blueprint $table) {

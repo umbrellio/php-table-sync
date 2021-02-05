@@ -17,7 +17,8 @@ use Umbrellio\TableSync\Integration\Laravel\TableSyncable;
  */
 final class SoftTestModel extends Model implements SyncableModel
 {
-    use TableSyncable, SoftDeletes;
+    use TableSyncable;
+    use SoftDeletes;
 
     public $timestamps = false;
 

@@ -13,12 +13,16 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
 
     $services->set(PhpUnitTestAnnotationFixer::class)
-        ->call('configure', [['style' => 'annotation']]);
+        ->call('configure', [[
+            'style' => 'annotation',
+        ]]);
 
     $services->set(DeclareStrictTypesFixer::class);
 
     $services->set(BinaryOperatorSpacesFixer::class)
-        ->call('configure', [['default' => 'single_space']]);
+        ->call('configure', [[
+            'default' => 'single_space',
+        ]]);
 
     $parameters = $containerConfigurator->parameters();
 

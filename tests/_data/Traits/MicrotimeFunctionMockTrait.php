@@ -9,6 +9,7 @@ use phpmock\MockBuilder;
 
 /**
  * Should be first for correct mock time.
+ *
  * @link https://github.com/php-mock/php-mock#requirements-and-restrictions
  */
 trait MicrotimeFunctionMockTrait

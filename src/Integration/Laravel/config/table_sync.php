@@ -31,7 +31,9 @@ return [
             'exchangeName' => 'group_id.app_id.exchange',
             'confirmSelect' => true,
         ],
-        /** 'custom_publisher' => 'SomePublisher' */
+        /**
+ * 'custom_publisher' => 'SomePublisher'
+ */
     ],
     'receive' => [
         'message_configs' => [
@@ -45,7 +47,9 @@ return [
             ],
         ],
         'queue' => '',
-        /** 'custom_received_message_handler' => 'SomeHandler' */
+        /**
+ * 'custom_received_message_handler' => 'SomeHandler'
+ */
         'microseconds_to_sleep' => 1000000,
     ],
     'laravel_heavy_jobs_enabled' => false,

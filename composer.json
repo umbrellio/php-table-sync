@@ -29,6 +29,7 @@
         "mockery/mockery": "^1.0",
         "mikey179/vfsstream": "^1.6",
         "umbrellio/code-style-php": "^1.0",
+        "symplify/easy-coding-standard":  "^9.3.15",
         "laravel/legacy-factories": "*",
         "php-coveralls/php-coveralls": "^2.1",
         "squizlabs/php_codesniffer": "^3.5"

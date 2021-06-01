@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Integration\Laravel\ReceivedMessageHandlers;
 
-use Illuminate\Bus\Dispatcher;
+use Illuminate\Contracts\Bus\Dispatcher;
 use Umbrellio\TableSync\Integration\Laravel\Jobs\ReceiveMessage;
 use Umbrellio\TableSync\Messages\ReceivedMessage;
 use Umbrellio\TableSync\ReceivedMessageHandler;

@@ -14,7 +14,7 @@
 
 ## Installation
 ```
-compose require umbrellio/php-table-sync
+composer require umbrellio/php-table-sync
 ```
 
 ## Usage

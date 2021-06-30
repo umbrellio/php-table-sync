@@ -22,6 +22,6 @@ class ByTargetKeysResolverTest extends LaravelTestCase
         ]);
 
         $expectedCondition = '(id,name)';
-        $this->assertSame($expectedCondition, $resolver->resolver($messageData));
+        $this->assertSame($expectedCondition, $resolver->resolve($messageData));
     }
 }

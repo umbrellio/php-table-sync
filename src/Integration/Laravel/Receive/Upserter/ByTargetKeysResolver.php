@@ -9,7 +9,7 @@ use Umbrellio\TableSync\Integration\Laravel\Receive\Upserter\ConflictConditionRe
 
 class ByTargetKeysResolver implements ConflictConditionResolverContract
 {
-    public function resolver(MessageData $messageData): string
+    public function resolve(MessageData $messageData): string
     {
         return '(' . implode(',', $messageData->getTargetKeys()) . ')';
     }

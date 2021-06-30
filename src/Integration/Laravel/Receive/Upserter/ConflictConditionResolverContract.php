@@ -8,5 +8,5 @@ use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageData;
 
 interface ConflictConditionResolverContract
 {
-    public function resolver(MessageData $messageData): string;
+    public function resolve(MessageData $messageData): string;
 }

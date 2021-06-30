@@ -33,7 +33,7 @@ class Upserter
         }, $columns));
 
         $values = $this->convertInsertValues($data);
-        $target = $this->conflictConditionResolver->resolver($messageData);
+        $target = $this->conflictConditionResolver->resolve($messageData);
 
         $valueBindings = Arr::flatten($data);
 

@@ -11,7 +11,9 @@ use PhpAmqpLib\Wire\AMQPTable;
 use Psr\Log\LoggerInterface;
 use Umbrellio\TableSync\Integration\Laravel\Console\PidManager;
 use Umbrellio\TableSync\Integration\Laravel\Publishers\QueuePublisher;
+use Umbrellio\TableSync\Integration\Laravel\Receive\Upserter\ByTargetKeysResolver;
 use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageDataRetriever;
+use Umbrellio\TableSync\Integration\Laravel\Receive\Upserter\ConflictConditionResolverContract;
 use Umbrellio\TableSync\Integration\Laravel\ReceivedMessageHandlers\QueueReceivedMessageHandler;
 use Umbrellio\TableSync\Publisher;
 use Umbrellio\TableSync\Rabbit\ChannelContainer;
@@ -23,6 +25,7 @@ use Umbrellio\TableSync\Rabbit\Publisher as RabbitPublisher;
 class TableSyncServiceProvider extends ServiceProvider
 {
     protected $defer = true;
+    public $bindings = [ConflictConditionResolverContract::class => ByTargetKeysResolver::class];
 
     public function boot()
     {

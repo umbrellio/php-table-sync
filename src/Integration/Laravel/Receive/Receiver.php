@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Integration\Laravel\Receive;
 
+use Illuminate\Support\Facades\App;
 use Umbrellio\TableSync\Integration\Laravel\Exceptions\UnknownMessageEvent;
 use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageDataRetriever;
+use Umbrellio\TableSync\Integration\Laravel\Receive\Upserter\Upserter;
 use Umbrellio\TableSync\Messages\ReceivedMessage;
 
 class Receiver
@@ -24,7 +26,7 @@ class Receiver
 
         switch ($event) {
             case 'update':
-                $upserter = new Upserter();
+                $upserter = App::make(Upserter::class);
                 $upserter->upsert($data, $message->getVersion());
                 break;
             case 'destroy':

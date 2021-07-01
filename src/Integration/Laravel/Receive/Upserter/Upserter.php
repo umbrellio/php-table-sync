@@ -2,14 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Umbrellio\TableSync\Integration\Laravel\Receive;
+namespace Umbrellio\TableSync\Integration\Laravel\Receive\Upserter;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageData;
+use Umbrellio\TableSync\Integration\Laravel\Receive\Upserter\ConflictConditionResolverContract;
 
 class Upserter
 {
+    private $conflictConditionResolver;
+
+    public function __construct(ConflictConditionResolverContract $conflictConditionResolver)
+    {
+        $this->conflictConditionResolver = $conflictConditionResolver;
+    }
+
     // todo via modern expressive not existing query builder
     public function upsert(MessageData $messageData, float $version): void
     {
@@ -25,7 +33,7 @@ class Upserter
         }, $columns));
 
         $values = $this->convertInsertValues($data);
-        $target = implode(',', $messageData->getTargetKeys());
+        $target = $this->conflictConditionResolver->resolve($messageData);
 
         $valueBindings = Arr::flatten($data);
 
@@ -34,7 +42,7 @@ class Upserter
 
         $sql = <<<CODE_SAMPLE
         INSERT INTO {$messageData->getTable()} ({$columnString}) VALUES {$values}
-        ON CONFLICT ({$target}) 
+        ON CONFLICT {$target} 
         DO UPDATE 
           SET {$updateSpecString}
           WHERE {$messageData->getTable()}.version < ?

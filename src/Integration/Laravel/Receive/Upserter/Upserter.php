@@ -21,7 +21,7 @@ class Upserter
     // todo via modern expressive not existing query builder
     public function upsert(MessageData $messageData, float $version): void
     {
-        if (empty($messageData->getData())) {
+        if (empty(array_filter($messageData->getData()))) {
             return;
         }
 

@@ -10,7 +10,9 @@ use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
 
 class ByTargetKeysResolverTest extends LaravelTestCase
 {
-    /** @test */
+    /**
+     * @test
+     */
     public function correctConditionResolved(): void
     {
         $resolver = new ByTargetKeysResolver();

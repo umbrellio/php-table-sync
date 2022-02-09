@@ -7,7 +7,6 @@ namespace Umbrellio\TableSync\Integration\Laravel\Receive\Upserter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageData;
-use Umbrellio\TableSync\Integration\Laravel\Receive\Upserter\ConflictConditionResolverContract;
 
 class Upserter
 {

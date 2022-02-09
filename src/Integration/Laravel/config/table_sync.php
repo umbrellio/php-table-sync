@@ -31,7 +31,7 @@ return [
             'exchangeName' => 'group_id.app_id.exchange',
             'confirmSelect' => true,
         ],
-        /**
+    /**
      * 'custom_publisher' => 'SomePublisher'
      */
     ],

@@ -49,7 +49,8 @@ class MessageBuilder
                 'app_id' => $this->publishMessageConfig->appId(),
                 'type' => self::EVENT_NAME,
                 'application_headers' => $this->publishMessageConfig->headers(),
-            ]);
+            ]
+        );
     }
 
     private function headersToArray(AMQPTable $table): array

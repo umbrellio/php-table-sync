@@ -49,7 +49,8 @@ class ChannelContainer
             $this->channel->basic_qos(
                 $this->channelOptions['prefetch_size'],
                 $this->channelOptions['prefetch_count'],
-                $this->channelOptions['a_global']);
+                $this->channelOptions['a_global']
+            );
         }
         return $this->channel;
     }

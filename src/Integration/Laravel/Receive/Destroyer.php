@@ -13,7 +13,7 @@ class Destroyer
 {
     public function destroy(MessageData $message): void
     {
-        if (empty($message->getData())) {
+        if (empty(array_filter($message->getData()))) {
             return;
         }
 

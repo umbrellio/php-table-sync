@@ -7,6 +7,7 @@ namespace Umbrellio\TableSync\Tests\Unit\Logging;
 use InfluxDB\Point;
 use Umbrellio\TableSync\Messages\PublishMessage;
 use Umbrellio\TableSync\Monolog\Formatter\InfluxDBFormatter;
+use Umbrellio\TableSync\Monolog\Formatter\JsonTableSyncFormatter;
 use Umbrellio\TableSync\Monolog\Formatter\LineTableSyncFormatter;
 use Umbrellio\TableSync\Monolog\Formatter\TableSyncFormatter;
 use Umbrellio\TableSync\Rabbit\Config\PublishMessage as Config;
@@ -76,6 +77,18 @@ class FormatterTest extends UnitTestCase
         $this->assertIsArray($format);
         $this->assertContainsOnlyInstancesOf(Point::class, $format);
         $this->assertSame(['model', 'event', 'direction'], array_keys($format[0]->getTags()));
+    }
+
+    /**
+     * @test
+     */
+    public function jsonTableSyncFormat(): void
+    {
+        $jsonTableSyncFormatter = new JsonTableSyncFormatter();
+        $format = $jsonTableSyncFormatter->format($this->getDummyRecord());
+        $expected = '{"datetime":"datetime","message":"message","direction":"direction","routing":"routing_key","model":"model","event":"update","count":1}' . "\n";
+        $this->assertIsString($format);
+        $this->assertSame($expected, $format);
     }
 
     private function getDummyRecord(): array

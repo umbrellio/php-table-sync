@@ -19,7 +19,9 @@ composer require umbrellio/php-table-sync
 ```
 
 ## Usage
+
 Let's describe the model that needs to be synchronized using an example `User.php`
+
 ```php
 ...
 User extends Model implements SyncableModel

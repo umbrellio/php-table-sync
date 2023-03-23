@@ -13,6 +13,7 @@
 
 
 ## Installation
+
 ```shell
 composer require umbrellio/php-table-sync
 ```

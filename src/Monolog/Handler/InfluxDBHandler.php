@@ -9,7 +9,7 @@ use InvalidArgumentException;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Handler\HandlerInterface;
-use Monolog\Logger;
+use Monolog\Level;
 use Monolog\LogRecord;
 use Umbrellio\TableSync\Monolog\Formatter\InfluxDBFormatter;
 use Umbrellio\TableSync\Monolog\Formatter\TableSyncFormatter;
@@ -19,7 +19,7 @@ class InfluxDBHandler extends AbstractProcessingHandler
     public function __construct(
         private readonly Database $database,
         private readonly string $measurement = 'table_sync',
-        int $level = Logger::INFO,
+        int|string|Level $level = Level::Info,
         bool $bubble = true
     ) {
         parent::__construct($level, $bubble);

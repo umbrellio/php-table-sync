@@ -89,7 +89,8 @@ class FormatterTest extends UnitTestCase
         $dateTime = new DateTimeImmutable();
         $format = $jsonTableSyncFormatter->format($this->getDummyRecord($dateTime));
         $expected = '{"datetime":"' . $dateTime->format('Y-m-d\TH:i:s.uP') .
-            '","message":"message","direction":"direction","routing":"routing_key","model":"model","event":"update","count":1}' . "\n";
+            '","message":"message","direction":"direction","routing":"routing_key",' .
+            '"model":"model","event":"update","count":1}' . "\n";
         $this->assertIsString($format);
         $this->assertSame($expected, $format);
     }

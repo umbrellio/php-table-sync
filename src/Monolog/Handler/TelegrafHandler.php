@@ -7,7 +7,7 @@ namespace Umbrellio\TableSync\Monolog\Handler;
 use InfluxDB\Driver\UDP;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Handler\AbstractProcessingHandler;
-use Monolog\Logger;
+use Monolog\Level;
 use Monolog\LogRecord;
 use Umbrellio\TableSync\Monolog\Formatter\InfluxDBFormatter;
 
@@ -19,7 +19,7 @@ class TelegrafHandler extends AbstractProcessingHandler
         $host,
         $port,
         private readonly string $measurement = 'table_sync',
-        $level = Logger::INFO,
+        int|string|Level $level = Level::Info,
         $bubble = true
     ) {
         parent::__construct($level, $bubble);

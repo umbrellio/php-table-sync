@@ -13,13 +13,13 @@
 
 
 ## Installation
-```
+```shell
 composer require umbrellio/php-table-sync
 ```
 
 ## Usage
 Let's describe the model that needs to be synchronized using an example `User.php`
-```
+```php
 ...
 User extends Model implements SyncableModel
 {
@@ -48,7 +48,7 @@ When the model changes, the data will be sent according to the rules of `TableSy
 ## Logging
 Logging based on the Monolog package and contains some extensions for it.
 - specify the logging channel in `config/table_sync.php`
-```
+```php
 ...
 'log' => [
     'channel' => 'table_sync',
@@ -56,7 +56,7 @@ Logging based on the Monolog package and contains some extensions for it.
 ...
 ```
 - and describe this channel in `config/logging.php`
-```
+```php
 ...
 'table_sync' => [
     'driver' => 'stack',
@@ -80,7 +80,7 @@ Logging based on the Monolog package and contains some extensions for it.
 ##### You can use the built-in `LineTableSyncFormatter::class` with the available parameters: `%datetime%` `%message%` `%direction%` `%model%` `%event%` `%routing%` `%attributes%` `%exception%`
 
 ###### Driver `influxdb` is an additional option and is not required to add in config
-```
+```php
 ...
 'table_sync' => [
     'driver' => 'daily',

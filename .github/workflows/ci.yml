@@ -68,7 +68,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        coverage: [false]
+        coverage: [true]
         experimental: [false]
         operating_system: [ubuntu-latest]
         postgres: ['11', '12', '13', '14', '15']

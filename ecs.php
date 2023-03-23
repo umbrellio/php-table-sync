@@ -2,31 +2,51 @@
 
 declare(strict_types=1);
 
-use PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer;
-use PhpCsFixer\Fixer\PhpUnit\PhpUnitTestAnnotationFixer;
-use PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\AssignmentInConditionSniff;
+use PhpCsFixer\Fixer\ClassNotation\ClassAttributesSeparationFixer;
+use PhpCsFixer\Fixer\ClassNotation\SingleTraitInsertPerStatementFixer;
+use PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer;
+use PhpCsFixer\Fixer\Operator\NotOperatorWithSuccessorSpaceFixer;
+use PhpCsFixer\Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocLineSpanFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
+use PhpCsFixer\Fixer\StringNotation\ExplicitStringVariableFixer;
+use PhpCsFixer\Fixer\Whitespace\ArrayIndentationFixer;
+use PhpCsFixer\Fixer\Whitespace\MethodChainingIndentationFixer;
+use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer;
+use Symplify\CodingStandard\Fixer\LineLength\LineLengthFixer;
+use Symplify\CodingStandard\Fixer\Spacing\MethodChainingNewlineFixer;
+use Symplify\EasyCodingStandard\Config\ECSConfig;
+use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $containerConfigurator->import(__DIR__ . '/vendor/umbrellio/code-style-php/umbrellio-cs.php');
+return static function (ECSConfig $ecsConfig): void {
+    $ecsConfig->paths([__DIR__ . '/app', __DIR__ . '/tests']);
+    $ecsConfig->parallel();
 
-    $services = $containerConfigurator->services();
+    $ecsConfig->sets([SetList::PSR_12]);
+    $ecsConfig->sets([SetList::CLEAN_CODE]);
+    $ecsConfig->sets([SetList::COMMON]);
+    $ecsConfig->sets([SetList::SYMPLIFY]);
+    $ecsConfig->sets([SetList::STRICT]);
 
-    $services->set(PhpUnitTestAnnotationFixer::class)
-        ->call('configure', [[
-            'style' => 'annotation',
-        ]]);
+    $ecsConfig->skip([
+        'vendor/*',
+        'database/*',
+        '.ecs_cache/*',
 
-    $services->set(DeclareStrictTypesFixer::class);
-
-    $services->set(BinaryOperatorSpacesFixer::class)
-        ->call('configure', [[
-            'default' => 'single_space',
-        ]]);
-
-    $parameters = $containerConfigurator->parameters();
-
-    $parameters->set('cache_directory', '.ecs_cache');
-
-    $parameters->set('exclude_files', ['vendor/*', 'database/*']);
+        ArrayIndentationFixer::class,
+        MethodArgumentSpaceFixer::class,
+        SingleTraitInsertPerStatementFixer::class,
+        PhpdocTrimFixer::class,
+        AssignmentInConditionSniff::class,
+        MethodChainingNewlineFixer::class,
+        ArrayOpenerAndCloserNewlineFixer::class,
+        NotOperatorWithSuccessorSpaceFixer::class,
+        PhpdocLineSpanFixer::class,
+        MethodChainingIndentationFixer::class,
+        ClassAttributesSeparationFixer::class,
+        LineLengthFixer::class,
+        NoSuperfluousPhpdocTagsFixer::class,
+        ExplicitStringVariableFixer::class,
+    ]);
 };

@@ -16,12 +16,10 @@ final class ReceiveMessage implements ShouldQueue, ShouldStorePayload
     use HeavyJobsEnabledTrait;
     use Queueable;
 
-    private $message;
-
-    public function __construct(ReceivedMessage $message)
-    {
+    public function __construct(
+        private readonly ReceivedMessage $message
+    ) {
         $this->queue = Config::get('table_sync.receive_job_queue', '');
-        $this->message = $message;
     }
 
     public function handle(Receiver $receiver): void

@@ -24,12 +24,12 @@ use Umbrellio\TableSync\Rabbit\Publisher as RabbitPublisher;
 
 class TableSyncServiceProvider extends ServiceProvider
 {
-    public $bindings = [
+    public array $bindings = [
         ConflictConditionResolverContract::class => ByTargetKeysResolver::class,
     ];
     protected $defer = true;
 
-    public function boot()
+    public function boot(): void
     {
         $config = __DIR__ . '/config/table_sync.php';
 
@@ -38,7 +38,7 @@ class TableSyncServiceProvider extends ServiceProvider
         ], 'config');
     }
 
-    public function configureChannel()
+    public function configureChannel(): void
     {
         $this->app->bind(ChannelContainer::class, function ($app) {
             $channel = new ChannelContainer($app->make(ConnectionContainer::class));
@@ -47,7 +47,7 @@ class TableSyncServiceProvider extends ServiceProvider
         });
     }
 
-    public function register()
+    public function register(): void
     {
         $publishConfig = ConfigRepository::get('table_sync.publish');
 
@@ -71,12 +71,12 @@ class TableSyncServiceProvider extends ServiceProvider
         $this->configureChannel();
     }
 
-    public function provides()
+    public function provides(): array
     {
         return [Publisher::class];
     }
 
-    protected function registerCommands()
+    protected function registerCommands(): void
     {
         if ($this->app->runningInConsole()) {
             $this->commands([

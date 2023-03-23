@@ -10,26 +10,19 @@ use Monolog\Formatter\FormatterInterface;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
+use Monolog\LogRecord;
 use Umbrellio\TableSync\Monolog\Formatter\InfluxDBFormatter;
 use Umbrellio\TableSync\Monolog\Formatter\TableSyncFormatter;
 
 class InfluxDBHandler extends AbstractProcessingHandler
 {
-    public const POINT_MEASUREMENT = 'table_sync';
-
-    private $database;
-    private $measurement;
-
     public function __construct(
-        Database $database,
-        ?string $measurement,
+        private readonly Database $database,
+        private readonly string $measurement = 'table_sync',
         int $level = Logger::INFO,
         bool $bubble = true
     ) {
         parent::__construct($level, $bubble);
-
-        $this->database = $database;
-        $this->measurement = $measurement ?? self::POINT_MEASUREMENT;
     }
 
     public function setFormatter(FormatterInterface $formatter): HandlerInterface
@@ -41,9 +34,9 @@ class InfluxDBHandler extends AbstractProcessingHandler
         throw new InvalidArgumentException('InfluxDBHandler is only compatible with TableSyncFormatter');
     }
 
-    protected function write(array $record): void
+    protected function write(LogRecord $record): void
     {
-        $this->database->writePoints($record['formatted']);
+        $this->database->writePoints($record->formatted);
     }
 
     protected function getDefaultFormatter(): FormatterInterface

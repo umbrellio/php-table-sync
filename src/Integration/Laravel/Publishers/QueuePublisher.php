@@ -11,13 +11,10 @@ use Umbrellio\TableSync\Publisher;
 
 final class QueuePublisher implements Publisher
 {
-    private $publisher;
-    private $dispatcher;
-
-    public function __construct(Publisher $publisher, Dispatcher $dispatcher)
-    {
-        $this->publisher = $publisher;
-        $this->dispatcher = $dispatcher;
+    public function __construct(
+        private readonly Publisher $publisher,
+        private readonly Dispatcher $dispatcher
+    ) {
     }
 
     public function publish(PublishMessage $message): void

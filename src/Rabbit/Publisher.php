@@ -15,21 +15,12 @@ use Umbrellio\TableSync\Rabbit\Exceptions\MaxAttemptsExceeded;
 
 final class Publisher implements PublisherContract
 {
-    private $config;
-    private $connectionContainer;
-    private $messageBuilder;
-    private $logger;
-
     public function __construct(
-        Config $config,
-        ConnectionContainer $connectionContainer,
-        MessageBuilder $messageBuilder,
-        LoggerInterface $logger = null
+        private readonly Config $config,
+        private readonly ConnectionContainer $connectionContainer,
+        private readonly MessageBuilder $messageBuilder,
+        private readonly LoggerInterface $logger = new NullLogger()
     ) {
-        $this->config = $config;
-        $this->connectionContainer = $connectionContainer;
-        $this->messageBuilder = $messageBuilder;
-        $this->logger = $logger ?? new NullLogger();
     }
 
     public function publish(PublishMessage $message): void

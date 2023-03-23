@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Tests\Unit\Logging;
 
+use DateTimeImmutable;
 use InfluxDB\Point;
+use Monolog\Level;
+use Monolog\LogRecord;
 use Umbrellio\TableSync\Messages\PublishMessage;
 use Umbrellio\TableSync\Monolog\Formatter\InfluxDBFormatter;
 use Umbrellio\TableSync\Monolog\Formatter\JsonTableSyncFormatter;
@@ -38,10 +41,8 @@ class FormatterTest extends UnitTestCase
         $this->assertIsArray($format);
         $this->assertIsArray($format['attributes']);
 
-        $format = $tableSyncFormatter->format([
-            'message' => '',
-            'datetime' => '',
-        ]);
+        $record = new LogRecord(new DateTimeImmutable(), '', Level::Debug, '');
+        $format = $tableSyncFormatter->format($record);
         $this->assertSame([
             'datetime',
             'message',
@@ -85,27 +86,26 @@ class FormatterTest extends UnitTestCase
     public function jsonTableSyncFormat(): void
     {
         $jsonTableSyncFormatter = new JsonTableSyncFormatter();
-        $format = $jsonTableSyncFormatter->format($this->getDummyRecord());
-        $expected = '{"datetime":"datetime","message":"message","direction":"direction","routing":"routing_key","model":"model","event":"update","count":1}' . "\n";
+        $dateTime = new DateTimeImmutable();
+        $format = $jsonTableSyncFormatter->format($this->getDummyRecord($dateTime));
+        $expected = '{"datetime":"' . $dateTime->format('Y-m-d\TH:i:s.uP') .
+            '","message":"message","direction":"direction","routing":"routing_key","model":"model","event":"update","count":1}' . "\n";
         $this->assertIsString($format);
         $this->assertSame($expected, $format);
     }
 
-    private function getDummyRecord(): array
+    private function getDummyRecord(DateTimeImmutable $dateTime = new DateTimeImmutable()): LogRecord
     {
         $message = new PublishMessage('model', 'event', 'routingKey', [
             'id' => 1,
         ]);
         $amqpMessage = (new MessageBuilder(new Config('appId')))->buildForPublishing($message);
-
-        return [
-            'message' => 'message',
-            'context' => [
-                'direction' => 'direction',
-                'routing_key' => 'routing_key',
-                'body' => $amqpMessage->getBody(),
-            ],
-            'datetime' => 'datetime',
+        $context = [
+            'direction' => 'direction',
+            'routing_key' => 'routing_key',
+            'body' => $amqpMessage->getBody(),
         ];
+
+        return new LogRecord($dateTime, '', Level::Debug, 'message', $context);
     }
 }

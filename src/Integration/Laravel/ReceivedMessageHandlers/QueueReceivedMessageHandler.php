@@ -11,11 +11,9 @@ use Umbrellio\TableSync\ReceivedMessageHandler;
 
 final class QueueReceivedMessageHandler implements ReceivedMessageHandler
 {
-    private $dispatcher;
-
-    public function __construct(Dispatcher $dispatcher)
-    {
-        $this->dispatcher = $dispatcher;
+    public function __construct(
+        private readonly Dispatcher $dispatcher
+    ) {
     }
 
     public function handle(ReceivedMessage $message): void

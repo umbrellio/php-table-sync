@@ -10,30 +10,24 @@ use Umbrellio\TableSync\Publisher;
 
 class Syncer
 {
-    private const EVENT_CREATED = 'created';
-    private const EVENT_UPDATED = 'updated';
-    private const EVENT_DELETED = 'deleted';
-
-    private $publisher;
-
-    public function __construct(Publisher $publisher)
-    {
-        $this->publisher = $publisher;
+    public function __construct(
+        private readonly Publisher $publisher
+    ) {
     }
 
     public function syncCreated(SyncableModel $model): void
     {
-        $this->syncTable($model, self::EVENT_CREATED);
+        $this->syncTable($model, PublishMessage::EVENT_CREATED);
     }
 
     public function syncUpdated(SyncableModel $model): void
     {
-        $this->syncTable($model, self::EVENT_UPDATED);
+        $this->syncTable($model, PublishMessage::EVENT_UPDATED);
     }
 
     public function syncDeleted(SyncableModel $model): void
     {
-        $this->syncTable($model, self::EVENT_DELETED);
+        $this->syncTable($model, PublishMessage::EVENT_DELETED);
     }
 
     private function syncTable(SyncableModel $model, string $event): void

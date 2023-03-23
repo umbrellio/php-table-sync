@@ -32,7 +32,7 @@ class PublishMessageTest extends UnitTestCase
         $message = new PublishMessage('class', 'event', 'test_key');
         $this->assertFalse($message->isDestroyed());
 
-        $message = new PublishMessage('class', PublishMessage::EVENT_DESTROYED, 'test_key');
+        $message = new PublishMessage('class', PublishMessage::EVENT_DELETED, 'test_key');
         $this->assertTrue($message->isDestroyed());
     }
 

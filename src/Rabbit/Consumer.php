@@ -11,23 +11,14 @@ use Psr\Log\NullLogger;
 
 class Consumer
 {
-    private $channelContainer;
-    private $messageBuilder;
-    private $config;
-    private $logger;
-
-    private $working;
+    private bool $working;
 
     public function __construct(
-        ChannelContainer $channelContainer,
-        MessageBuilder $messageBuilder,
-        Config\Consumer $config,
-        LoggerInterface $logger = null
+        private readonly ChannelContainer $channelContainer,
+        private readonly MessageBuilder $messageBuilder,
+        private readonly Config\Consumer $config,
+        private readonly LoggerInterface $logger = new NullLogger()
     ) {
-        $this->messageBuilder = $messageBuilder;
-        $this->channelContainer = $channelContainer;
-        $this->config = $config;
-        $this->logger = $logger ?? new NullLogger();
     }
 
     public function consume(): void

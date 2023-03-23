@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Umbrellio\TableSync\Monolog\Formatter;
 
 use Monolog\Formatter\NormalizerFormatter;
+use Monolog\LogRecord;
 
 class TableSyncFormatter extends NormalizerFormatter
 {
-    public function format(array $record)
+    /** @return array */
+    public function format(LogRecord $record)
     {
         return [
-            'datetime' => (string) $record['datetime'],
+            'datetime' => $record->datetime->format('Y-m-d\TH:i:s.uP'),
             'message' => $record['message'],
             'direction' => $this->getDirection($record),
             'routing' => $this->getRoutingKey($record),
@@ -22,27 +24,27 @@ class TableSyncFormatter extends NormalizerFormatter
         ];
     }
 
-    protected function getDirection(array $record): string
+    protected function getDirection(LogRecord $record): string
     {
-        return $record['context']['direction'] ?? '';
+        return $record->context['direction'] ?? '';
     }
 
-    protected function getRoutingKey(array $record): string
+    protected function getRoutingKey(LogRecord $record): string
     {
-        return $record['context']['routing_key'] ?? '';
+        return $record->context['routing_key'] ?? '';
     }
 
-    protected function getEventType(array $record): string
+    protected function getEventType(LogRecord $record): string
     {
         return $this->getBody($record)['event'] ?? '';
     }
 
-    protected function getModel(array $record): string
+    protected function getModel(LogRecord $record): string
     {
         return $this->getBody($record)['model'] ?? '';
     }
 
-    protected function getAttributes(array $record): array
+    protected function getAttributes(LogRecord $record): array
     {
         if (!$body = $this->getBody($record)) {
             return [];
@@ -53,9 +55,9 @@ class TableSyncFormatter extends NormalizerFormatter
         return $this->addVersions($attributes, $body['version']);
     }
 
-    protected function getBody(array $record): array
+    protected function getBody(LogRecord $record): array
     {
-        return (array) json_decode($record['context']['body'] ?? '', true);
+        return (array) json_decode($record->context['body'] ?? '', true);
     }
 
     private function wrapAttributes(array $attributes): array

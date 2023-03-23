@@ -133,9 +133,9 @@ jobs:
               -e "s/\${HOST}/${{ env.DB_HOST }}/" \
               phpunit.xml.dist > phpunit.xml
           if [[ ${{ matrix.coverage }} == true ]]; then
-            ./vendor/bin/phpunit --verbose --stderr --coverage-clover build/logs/clover.xml --coverage-text
+            ./vendor/bin/phpunit --stderr --coverage-clover build/logs/clover.xml --coverage-text
           else
-            ./vendor/bin/phpunit --verbose --stderr
+            ./vendor/bin/phpunit --stderr
           fi
         working-directory: './'
       - name: 'Upload coverage results to Coveralls'

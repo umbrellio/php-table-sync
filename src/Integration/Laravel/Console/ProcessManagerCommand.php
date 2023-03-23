@@ -8,12 +8,9 @@ use Illuminate\Console\Command;
 
 abstract class ProcessManagerCommand extends Command
 {
-    protected $pidManager;
-
-    public function __construct(PidManager $pidManager)
-    {
+    public function __construct(
+        protected PidManager $pidManager
+    ) {
         parent::__construct();
-
-        $this->pidManager = $pidManager;
     }
 }

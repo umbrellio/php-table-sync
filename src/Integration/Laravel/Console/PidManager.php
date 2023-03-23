@@ -8,11 +8,9 @@ use Safe;
 
 class PidManager
 {
-    private $pathToPidFile;
-
-    public function __construct(string $pathToPidFile)
-    {
-        $this->pathToPidFile = $pathToPidFile;
+    public function __construct(
+        private readonly string $pathToPidFile
+    ) {
     }
 
     public function pidExists(): bool

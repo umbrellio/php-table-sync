@@ -14,11 +14,10 @@ use Umbrellio\TableSync\Messages\ReceivedMessage;
 class MessageBuilder
 {
     public const EVENT_NAME = 'table_sync';
-    private $publishMessageConfig;
 
-    public function __construct(Config\PublishMessage $publishMessageConfig)
-    {
-        $this->publishMessageConfig = $publishMessageConfig;
+    public function __construct(
+        private readonly Config\PublishMessage $publishMessageConfig
+    ) {
     }
 
     public function buildReceivedMessage(AMQPMessage $message): ReceivedMessage

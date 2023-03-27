@@ -5,19 +5,17 @@ declare(strict_types=1);
 namespace Umbrellio\TableSync\Monolog\Formatter;
 
 use InfluxDB\Point;
+use Monolog\LogRecord;
 
 class InfluxDBFormatter extends TableSyncFormatter
 {
-    private $measurement;
-
-    public function __construct(string $measurement)
-    {
+    public function __construct(
+        private readonly string $measurement
+    ) {
         parent::__construct();
-
-        $this->measurement = $measurement;
     }
 
-    public function format(array $record): array
+    public function format(LogRecord $record): array
     {
         return [
             new Point(

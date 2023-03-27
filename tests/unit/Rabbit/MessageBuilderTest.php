@@ -96,7 +96,7 @@ class MessageBuilderTest extends UnitTestCase
         $this->assertSame('update', $body['event']);
 
         $amqpMessage = $this->builder->buildForPublishing(
-            new PublishMessage('class', PublishMessage::EVENT_DESTROYED, 'test_key')
+            new PublishMessage('class', PublishMessage::EVENT_DELETED, 'test_key')
         );
         $body = $this->decodedBodyFromMessage($amqpMessage);
 

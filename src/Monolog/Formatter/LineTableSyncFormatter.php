@@ -4,20 +4,17 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Monolog\Formatter;
 
+use Monolog\LogRecord;
+
 class LineTableSyncFormatter extends TableSyncFormatter
 {
-    private $format = '[%datetime%] %message% %routing% %model% %event%';
-
-    public function __construct(?string $format = null)
-    {
+    public function __construct(
+        private readonly string $format = '[%datetime%] %message% %routing% %model% %event%'
+    ) {
         parent::__construct();
-
-        if ($format !== null) {
-            $this->format = $format;
-        }
     }
 
-    public function format(array $record): string
+    public function format(LogRecord $record): string
     {
         $vars = parent::format($record);
 
@@ -29,7 +26,7 @@ class LineTableSyncFormatter extends TableSyncFormatter
                 continue;
             }
 
-            if (strpos($output, "%{$var}%") !== false) {
+            if (str_contains($output, "%{$var}%")) {
                 $output = str_replace("%{$var}%", $value, $output);
             }
         }

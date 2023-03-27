@@ -16,14 +16,11 @@ final class PublishJob implements ShouldQueue, ShouldStorePayload
     use HeavyJobsEnabledTrait;
     use Queueable;
 
-    private $publisherClass;
-    private $message;
-
-    public function __construct(string $publisherClass, PublishMessage $message)
-    {
+    public function __construct(
+        private readonly string $publisherClass,
+        private PublishMessage $message
+    ) {
         $this->queue = Config::get('table_sync.publish_job_queue', '');
-        $this->publisherClass = $publisherClass;
-        $this->message = $message;
     }
 
     public function handle(): void

@@ -8,17 +8,16 @@ use PhpAmqpLib\Channel\AMQPChannel;
 
 class ChannelContainer
 {
-    private $connectionContainer;
-    private $channel;
-    private $channelOptions = [
+    private AMQPChannel $channel;
+    private array $channelOptions = [
         'prefetch_size' => null,
         'prefetch_count' => 1,
         'a_global' => true,
     ];
 
-    public function __construct(ConnectionContainer $connectionContainer)
-    {
-        $this->connectionContainer = $connectionContainer;
+    public function __construct(
+        private readonly ConnectionContainer $connectionContainer
+    ) {
     }
 
     public function __destruct()
@@ -28,7 +27,7 @@ class ChannelContainer
         }
     }
 
-    public function setChannelOption($option)
+    public function setChannelOption($option): void
     {
         if (!empty($option['prefetch_size'])) {
             $this->channelOptions['prefetch_size'] = $option['prefetch_size'];

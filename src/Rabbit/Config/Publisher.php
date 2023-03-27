@@ -6,20 +6,11 @@ namespace Umbrellio\TableSync\Rabbit\Config;
 
 class Publisher
 {
-    private const DEFAULT_ATTEMPTS = 3;
-
-    private $exchangeName;
-    private $confirmSelect;
-    private $attempts;
-
     public function __construct(
-        string $exchangeName,
-        bool $confirmSelect = true,
-        int $attempts = self::DEFAULT_ATTEMPTS
+        private readonly string $exchangeName,
+        private readonly bool $confirmSelect = true,
+        private readonly int $attempts = 3
     ) {
-        $this->exchangeName = $exchangeName;
-        $this->confirmSelect = $confirmSelect;
-        $this->attempts = $attempts;
     }
 
     public function confirmSelect(): bool

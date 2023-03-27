@@ -10,11 +10,9 @@ use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageData;
 
 class Upserter
 {
-    private $conflictConditionResolver;
-
-    public function __construct(ConflictConditionResolverContract $conflictConditionResolver)
-    {
-        $this->conflictConditionResolver = $conflictConditionResolver;
+    public function __construct(
+        private readonly ConflictConditionResolverContract $conflictConditionResolver
+    ) {
     }
 
     // todo via modern expressive not existing query builder

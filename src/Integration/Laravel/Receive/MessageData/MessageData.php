@@ -6,15 +6,11 @@ namespace Umbrellio\TableSync\Integration\Laravel\Receive\MessageData;
 
 class MessageData
 {
-    private $table;
-    private $targetKeys;
-    private $data;
-
-    public function __construct(string $table, array $targetKeys, array $data)
-    {
-        $this->table = $table;
-        $this->targetKeys = $targetKeys;
-        $this->data = $data;
+    public function __construct(
+        private readonly string $table,
+        private readonly array $targetKeys,
+        private readonly array $data
+    ) {
     }
 
     public function getTable(): string

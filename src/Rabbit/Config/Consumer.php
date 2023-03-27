@@ -8,16 +8,13 @@ use Umbrellio\TableSync\ReceivedMessageHandler;
 
 class Consumer
 {
-    private $handler;
-    private $queue;
-    private $consumerTag;
-    private $microsecondsToSleep = 1000000;
+    private int $microsecondsToSleep = 1000000;
 
-    public function __construct(ReceivedMessageHandler $handler, string $queue, string $consumerTag = '')
-    {
-        $this->handler = $handler;
-        $this->queue = $queue;
-        $this->consumerTag = $consumerTag;
+    public function __construct(
+        private readonly ReceivedMessageHandler $handler,
+        private readonly string $queue,
+        private readonly string $consumerTag = ''
+    ) {
     }
 
     public function handler(): ReceivedMessageHandler

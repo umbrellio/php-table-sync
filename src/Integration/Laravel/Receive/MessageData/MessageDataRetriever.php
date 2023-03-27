@@ -10,12 +10,10 @@ use Umbrellio\TableSync\Messages\ReceivedMessage;
 
 class MessageDataRetriever
 {
-    private $config;
-
     // todo: config should be object
-    public function __construct(array $config)
-    {
-        $this->config = $config;
+    public function __construct(
+        private readonly array $config
+    ) {
     }
 
     public function retrieve(ReceivedMessage $message): MessageData

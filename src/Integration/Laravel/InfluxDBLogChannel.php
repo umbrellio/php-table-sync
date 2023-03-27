@@ -6,6 +6,7 @@ namespace Umbrellio\TableSync\Integration\Laravel;
 
 use Illuminate\Log\LogManager;
 use InfluxDB\Database;
+use Monolog\Level;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Umbrellio\TableSync\Monolog\Handler\InfluxDBHandler;
@@ -17,7 +18,7 @@ class InfluxDBLogChannel extends LogManager
         $handler = new InfluxDBHandler(
             $this->app->make(Database::class),
             $config['measurement'] ?? null,
-            $config['level'] ?? Logger::INFO,
+            $config['level'] ?? Level::Info,
             $config['bubble'] ?? true
         );
 

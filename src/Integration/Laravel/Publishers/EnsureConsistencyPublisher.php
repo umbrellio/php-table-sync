@@ -11,11 +11,9 @@ use Umbrellio\TableSync\Publisher;
 
 final class EnsureConsistencyPublisher implements Publisher
 {
-    private $publisher;
-
-    public function __construct(Publisher $publisher)
-    {
-        $this->publisher = $publisher;
+    public function __construct(
+        private readonly Publisher $publisher
+    ) {
     }
 
     public function publish(PublishMessage $message): void

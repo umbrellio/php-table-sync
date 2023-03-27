@@ -6,30 +6,15 @@ namespace Umbrellio\TableSync\Messages;
 
 class ReceivedMessage
 {
-    private $event;
-    private $model;
-    private $attributes;
-    private $version;
-    private $metadata;
-    private $appId;
-    private $headers;
-
     public function __construct(
-        string $event,
-        string $model,
-        array $attributes,
-        float $version,
-        array $metadata,
-        string $appId,
-        array $headers = []
+        private readonly string $event,
+        private readonly string $model,
+        private readonly array $attributes,
+        private readonly float $version,
+        private readonly array $metadata,
+        private readonly string $appId,
+        private readonly array $headers = []
     ) {
-        $this->event = $event;
-        $this->model = $model;
-        $this->attributes = $attributes;
-        $this->version = $version;
-        $this->metadata = $metadata;
-        $this->appId = $appId;
-        $this->headers = $headers;
     }
 
     public function getEvent(): string

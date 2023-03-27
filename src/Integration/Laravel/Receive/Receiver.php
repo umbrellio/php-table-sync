@@ -12,11 +12,9 @@ use Umbrellio\TableSync\Messages\ReceivedMessage;
 
 class Receiver
 {
-    private $dataRetriever;
-
-    public function __construct(MessageDataRetriever $dataRetriever)
-    {
-        $this->dataRetriever = $dataRetriever;
+    public function __construct(
+        private readonly MessageDataRetriever $dataRetriever
+    ) {
     }
 
     public function receive(ReceivedMessage $message): void

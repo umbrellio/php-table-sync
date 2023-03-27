@@ -8,11 +8,9 @@ use Umbrellio\TableSync\Integration\Laravel\Contracts\SyncableModel;
 
 class TableSyncObserver
 {
-    private $syncer;
-
-    public function __construct(Syncer $syncer)
-    {
-        $this->syncer = $syncer;
+    public function __construct(
+        private readonly Syncer $syncer
+    ) {
     }
 
     public function created(SyncableModel $model): void

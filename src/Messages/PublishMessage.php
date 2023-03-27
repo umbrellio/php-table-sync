@@ -6,25 +6,21 @@ namespace Umbrellio\TableSync\Messages;
 
 class PublishMessage
 {
-    public const EVENT_DESTROYED = 'deleted';
     public const EVENT_CREATED = 'created';
+    public const EVENT_UPDATED = 'updated';
+    public const EVENT_DELETED = 'deleted';
 
-    private $className;
-    private $routingKey;
-    private $event;
-    private $attributes;
-
-    public function __construct(string $className, string $event, string $routingKey, array $attributes = [])
-    {
-        $this->className = $className;
-        $this->routingKey = $routingKey;
-        $this->event = $event;
-        $this->attributes = $attributes;
+    public function __construct(
+        private readonly string $className,
+        private readonly string $event,
+        private readonly string $routingKey,
+        private readonly array $attributes = []
+    ) {
     }
 
     public function isDestroyed(): bool
     {
-        return $this->event === self::EVENT_DESTROYED;
+        return $this->event === self::EVENT_DELETED;
     }
 
     public function isCreated(): bool

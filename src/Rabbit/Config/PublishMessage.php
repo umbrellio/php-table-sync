@@ -8,13 +8,10 @@ use PhpAmqpLib\Wire\AMQPTable;
 
 class PublishMessage
 {
-    private $headers;
-    private $appId;
-
-    public function __construct(string $appId, ?AMQPTable $headers = null)
-    {
-        $this->appId = $appId;
-        $this->headers = $headers;
+    public function __construct(
+        private readonly string $appId,
+        private readonly ?AMQPTable $headers = null
+    ) {
     }
 
     public function headers(): ?AMQPTable

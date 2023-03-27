@@ -35,7 +35,7 @@ class TableSyncServiceProvider extends ServiceProvider
 
         $this->publishes([
             $config => base_path('config/table_sync.php'),
-        ], 'config');
+        ], 'config-table-sync');
     }
 
     public function configureChannel(): void

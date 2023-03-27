@@ -16,6 +16,7 @@
 
 ```shell
 composer require umbrellio/php-table-sync
+php artisan vendor:publish --tag=config-table-sync
 ```
 
 ## Usage

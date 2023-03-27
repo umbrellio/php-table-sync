@@ -12,7 +12,7 @@ class ConnectionContainer
 {
     private mixed $waitBeforeReconnectMicroseconds = 1000000;
 
-    private ?AbstractConnection $connection;
+    private ?AbstractConnection $connection = null;
 
     public function __construct(
         private readonly string $host,

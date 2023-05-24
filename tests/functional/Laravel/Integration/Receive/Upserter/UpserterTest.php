@@ -6,6 +6,7 @@ namespace Umbrellio\TableSync\Tests\functional\Laravel\Integration\Receive\Upser
 
 use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageData;
 use Umbrellio\TableSync\Integration\Laravel\Receive\Upserter\ByTargetKeysResolver;
+use Umbrellio\TableSync\Integration\Laravel\Receive\Upserter\ConflictConditionResolverContract;
 use Umbrellio\TableSync\Integration\Laravel\Receive\Upserter\Upserter;
 use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
 use Umbrellio\TableSync\Tests\functional\Laravel\Traits\StubPublisher;
@@ -23,8 +24,8 @@ class UpserterTest extends LaravelTestCase
     {
         parent::setUp();
 
-        $conflictResolver = new ByTargetKeysResolver();
-        $this->upserter = new Upserter($conflictResolver);
+        $this->app->bind(ConflictConditionResolverContract::class, ByTargetKeysResolver::class);
+        $this->upserter = new Upserter();
 
         $this->stubPublisher();
     }

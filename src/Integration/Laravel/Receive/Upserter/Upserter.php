@@ -4,80 +4,59 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Integration\Laravel\Receive\Upserter;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
+use InvalidArgumentException;
 use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageData;
+use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\EloquentSaver;
+use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\QuerySaver;
 
 class Upserter
 {
-    public function __construct(
-        private readonly ConflictConditionResolverContract $conflictConditionResolver
-    ) {
-    }
-
-    // todo via modern expressive not existing query builder
     public function upsert(MessageData $messageData, float $version): void
     {
         if (empty(array_filter($messageData->getData()))) {
             return;
         }
 
-        $data = $this->addVersionToItems($messageData->getData(), $version);
+        if ($messageData->getTable()) {
+            App::make(QuerySaver::class)->upsert($messageData, $version);
+            return;
+        }
 
-        $columns = array_keys($data[0]);
-        $columnString = implode(',', array_map(function (string $column): string {
-            return "\"{$column}\"";
-        }, $columns));
+        if ($messageData->getModel()) {
+            App::make(EloquentSaver::class)->upsert($messageData, $version);
+            return;
+        }
 
-        $values = $this->convertInsertValues($data);
-        $target = $this->conflictConditionResolver->resolve($messageData);
-
-        $valueBindings = Arr::flatten($data);
-
-        $updateColumns = array_diff($columns, $messageData->getTargetKeys());
-        $updateSpecString = $this->updateSpec($updateColumns);
-
-        $sql = <<<CODE_SAMPLE
-        INSERT INTO {$messageData->getTable()} ({$columnString}) VALUES {$values}
-        ON CONFLICT {$target} 
-        DO UPDATE 
-          SET {$updateSpecString}
-          WHERE {$messageData->getTable()}.version < ?
-CODE_SAMPLE;
-
-        DB::statement($sql, array_merge($valueBindings, [$version]));
+        throw new InvalidArgumentException('Table or Model must be set');
     }
 
-    private function addVersionToItems(array $items, float $version): array
-    {
-        return array_map(function ($item) use ($version) {
-            return array_merge($item, compact('version'));
-        }, $items);
-    }
-
-    private function convertInsertValues(array $items): string
-    {
-        $values = array_map(function (array $item) {
-            $item = $this->implodedPlaceholders($item);
-            return "({$item})";
-        }, $items);
-
-        return implode(',', $values);
-    }
-
-    private function updateSpec(array $columns): string
-    {
-        $values = array_map(function (string $column) {
-            return "\"{$column}\" = EXCLUDED.{$column}";
-        }, $columns);
-
-        return implode(',', $values);
-    }
-
-    private function implodedPlaceholders(array $items, string $placeholder = '?'): string
-    {
-        return implode(',', array_map(function () use ($placeholder) {
-            return $placeholder;
-        }, $items));
-    }
+//    private function upsertByModel(array $data, array $columns, MessageData $messageData, float $version): void
+//    {
+//        /** @var class-string<Model> $modelClass */
+//        $modelClass = $messageData->getModel();
+//
+//        foreach ($data as $item) {
+//            $query = $modelClass::query();
+//            foreach ($messageData->getTargetKeys() as $key) {
+//                $query->orWhere($key, $item[$key]);
+//            }
+//            $collection = $query->get();
+//
+//            if ($collection->count() === 0) {
+//                $model = new $modelClass();
+//                foreach ($item as $key => $value) {
+//                    $model->{$key} = $value;
+//                }
+//                $model->save();
+//                continue;
+//            }
+//
+//            foreach ($collection as $model) {
+//
+//            }
+//        }
+//
+//    }
 }

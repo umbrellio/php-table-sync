@@ -16,7 +16,7 @@ class ByTargetKeysResolverTest extends LaravelTestCase
     public function correctConditionResolved(): void
     {
         $resolver = new ByTargetKeysResolver();
-        $messageData = new MessageData('test_models', ['id', 'name'], [
+        $messageData = new MessageData('test_models', null, ['id', 'name'], [
             [
                 'id' => 1,
                 'name' => 'new_name',

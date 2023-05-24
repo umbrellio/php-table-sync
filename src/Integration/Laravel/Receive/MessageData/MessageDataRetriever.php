@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Integration\Laravel\Receive\MessageData;
 
+use Illuminate\Database\Eloquent\Model;
 use Umbrellio\TableSync\Integration\Laravel\Exceptions\Receive\IncorrectAdditionalDataHandler;
 use Umbrellio\TableSync\Integration\Laravel\Exceptions\Receive\IncorrectConfiguration;
 use Umbrellio\TableSync\Messages\ReceivedMessage;
@@ -19,11 +20,11 @@ class MessageDataRetriever
     public function retrieve(ReceivedMessage $message): MessageData
     {
         $messageConfig = $this->configForMessage($message);
-        $table = $this->retrieveTable($messageConfig);
+        [$table, $model] = $this->retrieveTableAndModel($messageConfig);
         $targetKeys = $this->retrieveTargetKeys($messageConfig);
         $data = $this->retrieveData($message, $messageConfig);
 
-        return new MessageData($table, $targetKeys, $data);
+        return new MessageData($table, $model, $targetKeys, $data);
     }
 
     private function configForMessage(ReceivedMessage $message): array
@@ -35,13 +36,22 @@ class MessageDataRetriever
         return $this->config[$message->getModel()];
     }
 
-    private function retrieveTable(array $messageConfig): string
+    /** @return array{0: ?string, 1: null|class-string<Model>} */
+    private function retrieveTableAndModel(array $messageConfig): array
     {
-        if (!isset($messageConfig['table'])) {
-            throw new IncorrectConfiguration('Table configuration required');
+        $table = $messageConfig['table'] ?? null;
+        $model = $messageConfig['model'] ?? null;
+        if (!$table && !$model) {
+            throw new IncorrectConfiguration('Table or Model configuration required');
+        }
+        if ($table && $model) {
+            throw new IncorrectConfiguration('Table and Model configuration cannot be set simultaneously');
+        }
+        if ($model && !is_subclass_of($model, Model::class)) {
+            throw new IncorrectConfiguration('Model must be subclass of ' . Model::class);
         }
 
-        return $messageConfig['table'];
+        return [$table, $model];
     }
 
     private function retrieveTargetKeys(array $messageConfig): array

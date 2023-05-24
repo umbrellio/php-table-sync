@@ -38,7 +38,9 @@ return [
     'receive' => [
         'message_configs' => [
             'SomeClass' => [
-                'table' => 'some_class_sync',
+                //Choose between model and table
+                'table' => 'some_models', //Saving via batch query, fast but model events not dispatched
+                //'model' => SomeModel::class, //Saving via Eloquent model, slower but with events
                 'target_keys' => ['external_id', 'some_other_field'],
                 'override_data' => [
                     'id' => 'external_id',

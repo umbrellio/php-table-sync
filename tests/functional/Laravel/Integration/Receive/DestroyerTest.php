@@ -36,7 +36,7 @@ class DestroyerTest extends LaravelTestCase
         /** @var TestModel $testModel */
         $testModel = factory(TestModel::class)->create();
 
-        $data = new MessageData($testModel->getTable(), ['id'], [[
+        $data = new MessageData($testModel->getTable(), null, ['id'], [[
             'id' => $testModel->id,
         ]]);
 
@@ -57,7 +57,7 @@ class DestroyerTest extends LaravelTestCase
             ];
         })->all();
 
-        $message = new MessageData($models->first()->getTable(), ['id'], $data);
+        $message = new MessageData($models->first()->getTable(), null, ['id'], $data);
 
         $this->destroyer->destroy($message);
 
@@ -79,7 +79,7 @@ class DestroyerTest extends LaravelTestCase
             'name' => 'test',
         ]);
 
-        $message = new MessageData($destroyedModel->getTable(), ['id'], [[
+        $message = new MessageData($destroyedModel->getTable(), null, ['id'], [[
             'id' => $destroyedModel->id,
             'name' => 'test',
         ]]);
@@ -95,7 +95,7 @@ class DestroyerTest extends LaravelTestCase
      */
     public function nothingIfDataEmpty(): void
     {
-        $data = new MessageData('not_exist_table', [], []);
+        $data = new MessageData('not_exist_table', null, [], []);
 
         $this->assertNull($this->destroyer->destroy($data));
     }

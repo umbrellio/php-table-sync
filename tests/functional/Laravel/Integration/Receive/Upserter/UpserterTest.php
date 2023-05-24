@@ -34,7 +34,7 @@ class UpserterTest extends LaravelTestCase
      */
     public function upsert(): void
     {
-        $data = new MessageData('test_models', ['id'], [
+        $data = new MessageData('test_models', null, ['id'], [
             [
                 'id' => 1,
                 'name' => 'first_name',
@@ -63,7 +63,7 @@ class UpserterTest extends LaravelTestCase
             'version' => 1000.1,
         ]);
 
-        $newData = new MessageData('test_models', ['id'], [
+        $newData = new MessageData('test_models', null, ['id'], [
             [
                 'id' => 1,
                 'name' => 'new_name',
@@ -80,7 +80,7 @@ class UpserterTest extends LaravelTestCase
         $this->upserter->upsert($newData, 1000.11);
         $this->assertDatabaseHas('test_models', $newRawData);
 
-        $newData = new MessageData('test_models', ['id'], [
+        $newData = new MessageData('test_models', null, ['id'], [
             [
                 'id' => 1,
                 'name' => 'some_name',
@@ -97,7 +97,7 @@ class UpserterTest extends LaravelTestCase
      */
     public function nothingIfDataEmpty(): void
     {
-        $data = new MessageData('not_exist_table', [], []);
+        $data = new MessageData('not_exist_table', null, [], []);
 
         $this->assertNull($this->upserter->upsert($data, 10.1));
     }

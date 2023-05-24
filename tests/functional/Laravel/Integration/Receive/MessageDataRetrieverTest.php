@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Tests\functional\Laravel\Integration\Receive;
 
+use Illuminate\Database\Eloquent\Model;
 use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\AdditionalDataHandlers\ProjectRetriever;
 use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageDataRetriever;
 use Umbrellio\TableSync\Messages\ReceivedMessage;
 use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
+use Umbrellio\TableSync\Tests\functional\Laravel\Models\TestModel;
 
 class MessageDataRetrieverTest extends LaravelTestCase
 {
@@ -27,13 +29,48 @@ class MessageDataRetrieverTest extends LaravelTestCase
     /**
      * @test
      */
-    public function exceptionIfNoTable(): void
+    public function exceptionIfNoTableAndModel(): void
     {
         $retriever = new MessageDataRetriever([
             'test_model' => [],
         ]);
 
-        $this->expectExceptionMessage('Table configuration required');
+        $this->expectExceptionMessage('Table or Model configuration required');
+
+        $message = $this->makeMessage();
+        $retriever->retrieve($message);
+    }
+
+    /**
+     * @test
+     */
+    public function exceptionIfHasBothTableAndModel(): void
+    {
+        $retriever = new MessageDataRetriever([
+            'test_model' => [
+                'table' => 'test_models',
+                'model' => TestModel::class,
+            ],
+        ]);
+
+        $this->expectExceptionMessage('Table and Model configuration cannot be set simultaneously');
+
+        $message = $this->makeMessage();
+        $retriever->retrieve($message);
+    }
+
+    /**
+     * @test
+     */
+    public function exceptionIfPassedModelIsNotModelSubclass(): void
+    {
+        $retriever = new MessageDataRetriever([
+            'test_model' => [
+                'model' => 'test_models',
+            ],
+        ]);
+
+        $this->expectExceptionMessage('Model must be subclass of ' . Model::class);
 
         $message = $this->makeMessage();
         $retriever->retrieve($message);

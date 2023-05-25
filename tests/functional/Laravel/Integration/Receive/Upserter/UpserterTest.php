@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Tests\functional\Laravel\Integration\Receive\Upserter;
 
+use Illuminate\Support\Facades\App;
 use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageData;
-use Umbrellio\TableSync\Integration\Laravel\Receive\Upserter\ByTargetKeysResolver;
-use Umbrellio\TableSync\Integration\Laravel\Receive\Upserter\ConflictConditionResolverContract;
+use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\QuerySaver;
 use Umbrellio\TableSync\Integration\Laravel\Receive\Upserter\Upserter;
 use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
 use Umbrellio\TableSync\Tests\functional\Laravel\Traits\StubPublisher;
@@ -24,7 +24,6 @@ class UpserterTest extends LaravelTestCase
     {
         parent::setUp();
 
-        $this->app->bind(ConflictConditionResolverContract::class, ByTargetKeysResolver::class);
         $this->upserter = new Upserter();
 
         $this->stubPublisher();
@@ -35,7 +34,7 @@ class UpserterTest extends LaravelTestCase
      */
     public function upsert(): void
     {
-        $data = new MessageData('test_models', null, ['id'], [
+        $data = new MessageData('test_models', App::make(QuerySaver::class), ['id'], [
             [
                 'id' => 1,
                 'name' => 'first_name',
@@ -64,7 +63,7 @@ class UpserterTest extends LaravelTestCase
             'version' => 1000.1,
         ]);
 
-        $newData = new MessageData('test_models', null, ['id'], [
+        $newData = new MessageData('test_models', App::make(QuerySaver::class), ['id'], [
             [
                 'id' => 1,
                 'name' => 'new_name',
@@ -81,7 +80,7 @@ class UpserterTest extends LaravelTestCase
         $this->upserter->upsert($newData, 1000.11);
         $this->assertDatabaseHas('test_models', $newRawData);
 
-        $newData = new MessageData('test_models', null, ['id'], [
+        $newData = new MessageData('test_models', App::make(QuerySaver::class), ['id'], [
             [
                 'id' => 1,
                 'name' => 'some_name',
@@ -98,7 +97,7 @@ class UpserterTest extends LaravelTestCase
      */
     public function nothingIfDataEmpty(): void
     {
-        $data = new MessageData('not_exist_table', null, [], []);
+        $data = new MessageData('not_exist_table', App::make(QuerySaver::class), [], []);
 
         $this->assertNull($this->upserter->upsert($data, 10.1));
     }

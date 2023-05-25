@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Tests\functional\Laravel\Integration\Receive;
 
+use Illuminate\Support\Facades\App;
 use Umbrellio\TableSync\Integration\Laravel\Receive\Destroyer;
 use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageData;
+use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\QuerySaver;
 use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
 use Umbrellio\TableSync\Tests\functional\Laravel\Models\TestModel;
 use Umbrellio\TableSync\Tests\functional\Laravel\Traits\StubPublisher;
@@ -36,7 +38,7 @@ class DestroyerTest extends LaravelTestCase
         /** @var TestModel $testModel */
         $testModel = factory(TestModel::class)->create();
 
-        $data = new MessageData($testModel->getTable(), null, ['id'], [[
+        $data = new MessageData($testModel->getTable(), App::make(QuerySaver::class), ['id'], [[
             'id' => $testModel->id,
         ]]);
 
@@ -57,7 +59,7 @@ class DestroyerTest extends LaravelTestCase
             ];
         })->all();
 
-        $message = new MessageData($models->first()->getTable(), null, ['id'], $data);
+        $message = new MessageData($models->first()->getTable(), App::make(QuerySaver::class), ['id'], $data);
 
         $this->destroyer->destroy($message);
 
@@ -79,7 +81,7 @@ class DestroyerTest extends LaravelTestCase
             'name' => 'test',
         ]);
 
-        $message = new MessageData($destroyedModel->getTable(), null, ['id'], [[
+        $message = new MessageData($destroyedModel->getTable(), App::make(QuerySaver::class), ['id'], [[
             'id' => $destroyedModel->id,
             'name' => 'test',
         ]]);
@@ -95,7 +97,7 @@ class DestroyerTest extends LaravelTestCase
      */
     public function nothingIfDataEmpty(): void
     {
-        $data = new MessageData('not_exist_table', null, [], []);
+        $data = new MessageData('not_exist_table', App::make(QuerySaver::class), [], []);
 
         $this->assertNull($this->destroyer->destroy($data));
     }

@@ -7,6 +7,8 @@ namespace Umbrellio\TableSync\Tests\functional\Laravel;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase;
+use Umbrellio\TableSync\Integration\Laravel\Receive\Upserter\ByTargetKeysResolver;
+use Umbrellio\TableSync\Integration\Laravel\Receive\Upserter\ConflictConditionResolverContract;
 
 abstract class LaravelTestCase extends TestCase
 {
@@ -17,6 +19,7 @@ abstract class LaravelTestCase extends TestCase
         parent::setUp();
 
         $this->setUpDatabase($this->app);
+        $this->app->bind(ConflictConditionResolverContract::class, ByTargetKeysResolver::class);
     }
 
     protected function getEnvironmentSetUp($app): void

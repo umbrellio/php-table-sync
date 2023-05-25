@@ -17,7 +17,7 @@ class Destroyer
             return;
         }
 
-        $query = DB::table($message->getTable());
+        $query = DB::table($message->getTarget());
         foreach ($message->getData() as $itemData) {
             $query->orWhere(function (Builder $builder) use ($message, $itemData) {
                 $builder->where(Arr::only($itemData, $message->getTargetKeys()));

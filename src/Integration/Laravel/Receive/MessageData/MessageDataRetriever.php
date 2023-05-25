@@ -5,8 +5,12 @@ declare(strict_types=1);
 namespace Umbrellio\TableSync\Integration\Laravel\Receive\MessageData;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 use Umbrellio\TableSync\Integration\Laravel\Exceptions\Receive\IncorrectAdditionalDataHandler;
 use Umbrellio\TableSync\Integration\Laravel\Exceptions\Receive\IncorrectConfiguration;
+use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\EloquentSaver;
+use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\QuerySaver;
+use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\Saver;
 use Umbrellio\TableSync\Messages\ReceivedMessage;
 
 class MessageDataRetriever
@@ -20,11 +24,11 @@ class MessageDataRetriever
     public function retrieve(ReceivedMessage $message): MessageData
     {
         $messageConfig = $this->configForMessage($message);
-        [$table, $model] = $this->retrieveTableAndModel($messageConfig);
+        [$target, $saver] = $this->retrieveTargetAndSaver($messageConfig);
         $targetKeys = $this->retrieveTargetKeys($messageConfig);
         $data = $this->retrieveData($message, $messageConfig);
 
-        return new MessageData($table, $model, $targetKeys, $data);
+        return new MessageData($target, $saver, $targetKeys, $data);
     }
 
     private function configForMessage(ReceivedMessage $message): array
@@ -36,8 +40,8 @@ class MessageDataRetriever
         return $this->config[$message->getModel()];
     }
 
-    /** @return array{0: ?string, 1: null|class-string<Model>} */
-    private function retrieveTableAndModel(array $messageConfig): array
+    /** @return array{0: string, 1: Saver} */
+    private function retrieveTargetAndSaver(array $messageConfig): array
     {
         $table = $messageConfig['table'] ?? null;
         $model = $messageConfig['model'] ?? null;
@@ -51,7 +55,9 @@ class MessageDataRetriever
             throw new IncorrectConfiguration('Model must be subclass of ' . Model::class);
         }
 
-        return [$table, $model];
+        return $table ?
+            [$table, App::make(QuerySaver::class)] :
+            [$model, App::make(EloquentSaver::class)];
     }
 
     private function retrieveTargetKeys(array $messageConfig): array

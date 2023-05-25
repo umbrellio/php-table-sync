@@ -36,11 +36,11 @@ class QuerySaver implements Saver
         $updateSpecString = $this->updateSpec($updateColumns);
 
         $sql = <<<CODE_SAMPLE
-        INSERT INTO {$messageData->getTable()} ({$columnString}) VALUES {$values}
+        INSERT INTO {$messageData->getTarget()} ({$columnString}) VALUES {$values}
         ON CONFLICT {$target} 
         DO UPDATE 
           SET {$updateSpecString}
-          WHERE {$messageData->getTable()}.version < ?
+          WHERE {$messageData->getTarget()}.version < ?
 CODE_SAMPLE;
 
         DB::statement($sql, array_merge($valueBindings, [$version]));
@@ -48,7 +48,7 @@ CODE_SAMPLE;
 
     public function destroy(MessageData $messageData): void
     {
-        $query = DB::table($messageData->getTable());
+        $query = DB::table($messageData->getTarget());
         foreach ($messageData->getData() as $itemData) {
             $query->orWhere(function (Builder $builder) use ($messageData, $itemData) {
                 $builder->where(Arr::only($itemData, $messageData->getTargetKeys()));

@@ -115,7 +115,7 @@ class MessageDataRetrieverTest extends LaravelTestCase
         ]);
         $data = $retriever->retrieve($message);
 
-        $this->assertSame('test_models', $data->getTable());
+        $this->assertSame('test_models', $data->getTarget());
         $this->assertSame(['id'], $data->getTargetKeys());
         $this->assertSame([
             [

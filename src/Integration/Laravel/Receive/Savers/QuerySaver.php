@@ -57,14 +57,14 @@ CODE_SAMPLE;
         $query->delete();
     }
 
-    private function addVersionToItems(array $items, float $version): array
+    protected function addVersionToItems(array $items, float $version): array
     {
         return array_map(function ($item) use ($version) {
             return array_merge($item, compact('version'));
         }, $items);
     }
 
-    private function convertInsertValues(array $items): string
+    protected function convertInsertValues(array $items): string
     {
         $values = array_map(function (array $item) {
             $item = $this->implodedPlaceholders($item);
@@ -74,7 +74,7 @@ CODE_SAMPLE;
         return implode(',', $values);
     }
 
-    private function updateSpec(array $columns): string
+    protected function updateSpec(array $columns): string
     {
         $values = array_map(function (string $column) {
             return "\"{$column}\" = EXCLUDED.{$column}";
@@ -83,7 +83,7 @@ CODE_SAMPLE;
         return implode(',', $values);
     }
 
-    private function implodedPlaceholders(array $items, string $placeholder = '?'): string
+    protected function implodedPlaceholders(array $items, string $placeholder = '?'): string
     {
         return implode(',', array_map(function () use ($placeholder) {
             return $placeholder;

@@ -7,8 +7,8 @@ namespace Umbrellio\TableSync\Tests\functional\Laravel;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase;
-use Umbrellio\TableSync\Integration\Laravel\Receive\Upserter\ByTargetKeysResolver;
-use Umbrellio\TableSync\Integration\Laravel\Receive\Upserter\ConflictConditionResolverContract;
+use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\ConflictResolvers\ByTargetKeysResolver;
+use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\ConflictResolvers\ConflictConditionResolverContract;
 
 abstract class LaravelTestCase extends TestCase
 {

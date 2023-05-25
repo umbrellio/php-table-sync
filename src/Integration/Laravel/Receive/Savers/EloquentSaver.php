@@ -75,7 +75,7 @@ class EloquentSaver implements Saver
         $query->where('version', '<', $version)
             ->where(function (Builder $builder) use ($updateColumns, $item) {
                 foreach ($updateColumns as $column) {
-                    $builder->where($column, '!=', $item[$column]);
+                    $builder->orWhere($column, '!=', $item[$column]);
                 }
             })
             ->limit(self::LIMIT);

@@ -8,7 +8,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageData;
-use Umbrellio\TableSync\Integration\Laravel\Receive\Upserter\ConflictConditionResolverContract;
+use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\ConflictResolvers\ConflictConditionResolverContract;
 
 class QuerySaver implements Saver
 {

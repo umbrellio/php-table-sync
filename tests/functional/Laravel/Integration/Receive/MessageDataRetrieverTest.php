@@ -109,35 +109,6 @@ class MessageDataRetrieverTest extends LaravelTestCase
         $this->assertRetrieved('model', TestModel::class);
     }
 
-    private function assertRetrieved(string $targetType, string $target): void
-    {
-        $retriever = new MessageDataRetriever([
-            'test_model' => [
-                $targetType => $target,
-                'target_keys' => ['id'],
-            ],
-        ]);
-
-        $message = $this->makeMessage([
-            'attributes' => [
-                [
-                    'id' => 1,
-                    'some' => 'data',
-                ],
-            ],
-        ]);
-        $data = $retriever->retrieve($message);
-
-        $this->assertSame($target, $data->getTarget());
-        $this->assertSame(['id'], $data->getTargetKeys());
-        $this->assertSame([
-            [
-                'id' => 1,
-                'some' => 'data',
-            ],
-        ], $data->getData());
-    }
-
     /**
      * @test
      */
@@ -201,6 +172,35 @@ class MessageDataRetrieverTest extends LaravelTestCase
                 'some' => 'data',
                 'project_id' => 'test_project',
                 'external_id' => 1,
+            ],
+        ], $data->getData());
+    }
+
+    private function assertRetrieved(string $targetType, string $target): void
+    {
+        $retriever = new MessageDataRetriever([
+            'test_model' => [
+                $targetType => $target,
+                'target_keys' => ['id'],
+            ],
+        ]);
+
+        $message = $this->makeMessage([
+            'attributes' => [
+                [
+                    'id' => 1,
+                    'some' => 'data',
+                ],
+            ],
+        ]);
+        $data = $retriever->retrieve($message);
+
+        $this->assertSame($target, $data->getTarget());
+        $this->assertSame(['id'], $data->getTargetKeys());
+        $this->assertSame([
+            [
+                'id' => 1,
+                'some' => 'data',
             ],
         ], $data->getData());
     }

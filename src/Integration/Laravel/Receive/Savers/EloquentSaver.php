@@ -31,16 +31,14 @@ class EloquentSaver implements Saver
 
     public function destroy(MessageData $messageData): void
     {
-        /** @var class-string<Model> $modelClass */
-        $modelClass = $messageData->getTarget();
-
         foreach ($messageData->getData() as $item) {
-            $query = $modelClass::query()
-                ->where(Arr::only($item, $messageData->getTargetKeys()))
+            $query = $this
+                ->getQueryByTargetKeys($messageData, $item)
                 ->limit($this->getLimit());
 
             while ($query->count() !== 0) {
-                $query->get()
+                $query
+                    ->get()
                     ->each(fn (Model $model) => $model->forceDelete());
             }
         }
@@ -51,12 +49,7 @@ class EloquentSaver implements Saver
         /** @var class-string<Model> $modelClass */
         $modelClass = $messageData->getTarget();
 
-        $query = $modelClass::query();
-        foreach ($messageData->getTargetKeys() as $key) {
-            $query->where($key, $item[$key]);
-        }
-
-        return $query;
+        return $modelClass::query()->where(Arr::only($item, $messageData->getTargetKeys()));
     }
 
     protected function fillAndSaveModel(Model $model, float $version, array $columns, array $values): void
@@ -82,7 +75,8 @@ class EloquentSaver implements Saver
             ->limit($this->getLimit());
 
         while ($query->count() !== 0) {
-            $query->get()
+            $query
+                ->get()
                 ->each(fn (Model $model) => $this->fillAndSaveModel($model, $version, $updateColumns, $item));
         }
     }

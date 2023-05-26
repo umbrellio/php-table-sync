@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Tests\functional\Laravel\Integration\Receive;
 
+use Illuminate\Database\Eloquent\Model;
 use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\AdditionalDataHandlers\ProjectRetriever;
 use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageDataRetriever;
 use Umbrellio\TableSync\Messages\ReceivedMessage;
 use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
+use Umbrellio\TableSync\Tests\functional\Laravel\Models\TestModel;
 
 class MessageDataRetrieverTest extends LaravelTestCase
 {
@@ -27,13 +29,48 @@ class MessageDataRetrieverTest extends LaravelTestCase
     /**
      * @test
      */
-    public function exceptionIfNoTable(): void
+    public function exceptionIfNoTableAndModel(): void
     {
         $retriever = new MessageDataRetriever([
             'test_model' => [],
         ]);
 
-        $this->expectExceptionMessage('Table configuration required');
+        $this->expectExceptionMessage('Table or Model configuration required');
+
+        $message = $this->makeMessage();
+        $retriever->retrieve($message);
+    }
+
+    /**
+     * @test
+     */
+    public function exceptionIfHasBothTableAndModel(): void
+    {
+        $retriever = new MessageDataRetriever([
+            'test_model' => [
+                'table' => 'test_models',
+                'model' => TestModel::class,
+            ],
+        ]);
+
+        $this->expectExceptionMessage('Table and Model configuration cannot be set simultaneously');
+
+        $message = $this->makeMessage();
+        $retriever->retrieve($message);
+    }
+
+    /**
+     * @test
+     */
+    public function exceptionIfPassedModelIsNotModelSubclass(): void
+    {
+        $retriever = new MessageDataRetriever([
+            'test_model' => [
+                'model' => 'test_models',
+            ],
+        ]);
+
+        $this->expectExceptionMessage('Model must be subclass of ' . Model::class);
 
         $message = $this->makeMessage();
         $retriever->retrieve($message);
@@ -59,33 +96,17 @@ class MessageDataRetrieverTest extends LaravelTestCase
     /**
      * @test
      */
-    public function retrieve(): void
+    public function retrieveByTable(): void
     {
-        $retriever = new MessageDataRetriever([
-            'test_model' => [
-                'table' => 'test_models',
-                'target_keys' => ['id'],
-            ],
-        ]);
+        $this->assertRetrieved('table', 'test_models');
+    }
 
-        $message = $this->makeMessage([
-            'attributes' => [
-                [
-                    'id' => 1,
-                    'some' => 'data',
-                ],
-            ],
-        ]);
-        $data = $retriever->retrieve($message);
-
-        $this->assertSame('test_models', $data->getTable());
-        $this->assertSame(['id'], $data->getTargetKeys());
-        $this->assertSame([
-            [
-                'id' => 1,
-                'some' => 'data',
-            ],
-        ], $data->getData());
+    /**
+     * @test
+     */
+    public function retrieveByModel(): void
+    {
+        $this->assertRetrieved('model', TestModel::class);
     }
 
     /**
@@ -151,6 +172,35 @@ class MessageDataRetrieverTest extends LaravelTestCase
                 'some' => 'data',
                 'project_id' => 'test_project',
                 'external_id' => 1,
+            ],
+        ], $data->getData());
+    }
+
+    private function assertRetrieved(string $targetType, string $target): void
+    {
+        $retriever = new MessageDataRetriever([
+            'test_model' => [
+                $targetType => $target,
+                'target_keys' => ['id'],
+            ],
+        ]);
+
+        $message = $this->makeMessage([
+            'attributes' => [
+                [
+                    'id' => 1,
+                    'some' => 'data',
+                ],
+            ],
+        ]);
+        $data = $retriever->retrieve($message);
+
+        $this->assertSame($target, $data->getTarget());
+        $this->assertSame(['id'], $data->getTargetKeys());
+        $this->assertSame([
+            [
+                'id' => 1,
+                'some' => 'data',
             ],
         ], $data->getData());
     }

@@ -38,7 +38,10 @@ return [
     'receive' => [
         'message_configs' => [
             'SomeClass' => [
-                'table' => 'some_class_sync',
+                //Choose between table and model.
+                'table' => 'some_models', //Mass saving via raw query. Fast but Eloquent model events not dispatched.
+                //Saving by one via Eloquent models. Slower but with events. Also works with non-unique target keys.
+                //'model' => SomeModel::class,
                 'target_keys' => ['external_id', 'some_other_field'],
                 'override_data' => [
                     'id' => 'external_id',
@@ -51,6 +54,7 @@ return [
          * 'custom_received_message_handler' => 'SomeHandler'
          */
         'microseconds_to_sleep' => 1000000,
+        //'eloquent_chunk_size' => 500, // Chunk size for Eloquent model saver, 500 by default.
     ],
     'laravel_heavy_jobs_enabled' => false,
     'log' => [

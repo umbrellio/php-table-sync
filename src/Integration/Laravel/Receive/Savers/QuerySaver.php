@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Umbrellio\TableSync\Integration\Laravel\Receive\Upserter;
+namespace Umbrellio\TableSync\Integration\Laravel\Receive\Savers;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageData;
+use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\ConflictResolvers\ConflictConditionResolverContract;
 
-class Upserter
+class QuerySaver implements Saver
 {
     public function __construct(
         private readonly ConflictConditionResolverContract $conflictConditionResolver
@@ -18,13 +20,9 @@ class Upserter
     // todo via modern expressive not existing query builder
     public function upsert(MessageData $messageData, float $version): void
     {
-        if (empty(array_filter($messageData->getData()))) {
-            return;
-        }
-
         $data = $this->addVersionToItems($messageData->getData(), $version);
-
         $columns = array_keys($data[0]);
+
         $columnString = implode(',', array_map(function (string $column): string {
             return "\"{$column}\"";
         }, $columns));
@@ -38,24 +36,35 @@ class Upserter
         $updateSpecString = $this->updateSpec($updateColumns);
 
         $sql = <<<CODE_SAMPLE
-        INSERT INTO {$messageData->getTable()} ({$columnString}) VALUES {$values}
+        INSERT INTO {$messageData->getTarget()} ({$columnString}) VALUES {$values}
         ON CONFLICT {$target} 
         DO UPDATE 
           SET {$updateSpecString}
-          WHERE {$messageData->getTable()}.version < ?
+          WHERE {$messageData->getTarget()}.version < ?
 CODE_SAMPLE;
 
         DB::statement($sql, array_merge($valueBindings, [$version]));
     }
 
-    private function addVersionToItems(array $items, float $version): array
+    public function destroy(MessageData $messageData): void
+    {
+        $query = DB::table($messageData->getTarget());
+        foreach ($messageData->getData() as $itemData) {
+            $query->orWhere(function (Builder $builder) use ($messageData, $itemData) {
+                $builder->where(Arr::only($itemData, $messageData->getTargetKeys()));
+            });
+        }
+        $query->delete();
+    }
+
+    protected function addVersionToItems(array $items, float $version): array
     {
         return array_map(function ($item) use ($version) {
             return array_merge($item, compact('version'));
         }, $items);
     }
 
-    private function convertInsertValues(array $items): string
+    protected function convertInsertValues(array $items): string
     {
         $values = array_map(function (array $item) {
             $item = $this->implodedPlaceholders($item);
@@ -65,7 +74,7 @@ CODE_SAMPLE;
         return implode(',', $values);
     }
 
-    private function updateSpec(array $columns): string
+    protected function updateSpec(array $columns): string
     {
         $values = array_map(function (string $column) {
             return "\"{$column}\" = EXCLUDED.{$column}";
@@ -74,7 +83,7 @@ CODE_SAMPLE;
         return implode(',', $values);
     }
 
-    private function implodedPlaceholders(array $items, string $placeholder = '?'): string
+    protected function implodedPlaceholders(array $items, string $placeholder = '?'): string
     {
         return implode(',', array_map(function () use ($placeholder) {
             return $placeholder;

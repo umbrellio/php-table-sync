@@ -22,7 +22,7 @@ class TableSyncObserverTest extends LaravelTestCase
     {
         parent::setUp();
 
-        $this->spyPublisher = $this->makeSpyPublsiher();
+        $this->spyPublisher = $this->makeSpyPublisher();
 
         $this->app->bind(Publisher::class, function () {
             return $this->spyPublisher;

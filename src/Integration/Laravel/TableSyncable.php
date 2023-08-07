@@ -20,6 +20,11 @@ trait TableSyncable
         return $this->getAttributes();
     }
 
+    public function getTableSyncableDestroyAttributes(): array
+    {
+        return [];
+    }
+
     public function classForSync(): string
     {
         return static::class;

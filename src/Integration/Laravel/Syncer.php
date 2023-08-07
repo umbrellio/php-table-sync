@@ -48,11 +48,11 @@ class Syncer
 
     private function getSyncableAttributes(SyncableModel $model): array
     {
-        if (!$model->exists()) {
-            return $this->pkAttributes($model);
-        }
+        $syncableAttributes = $model->exists() ?
+            $model->getTableSyncableAttributes() :
+            $model->getTableSyncableDestroyAttributes();
 
-        return array_merge($this->pkAttributes($model), $model->getTableSyncableAttributes());
+        return array_merge($this->pkAttributes($model), $syncableAttributes);
     }
 
     private function needsPublishAttributes(SyncableModel $model, array $attributes): bool

@@ -9,7 +9,7 @@ use Umbrellio\TableSync\Publisher;
 
 trait SpyPublisher
 {
-    protected function makeSpyPublsiher(): Publisher
+    protected function makeSpyPublisher(): Publisher
     {
         return new class() implements Publisher {
             public $messages;

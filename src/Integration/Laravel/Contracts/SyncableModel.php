@@ -7,37 +7,42 @@ namespace Umbrellio\TableSync\Integration\Laravel\Contracts;
 interface SyncableModel
 {
     /**
-     * @var string
+     * @return string
      */
     public function getKeyName();
 
     /**
-     * @var string
+     * @return string
      */
     public function getKey();
 
     /**
-     * @var static|null
+     * @return static|null
      */
     public function fresh();
 
     /**
-     * @var array
+     * @return array
      */
     public function getTableSyncableAttributes();
 
     /**
-     * @var string
+     * @return array
+     */
+    public function getTableSyncableDeletedAttributes();
+
+    /**
+     * @return string
      */
     public function classForSync();
 
     /**
-     * @var bool
+     * @return bool
      */
     public function exists();
 
     /**
-     * @var string
+     * @return string
      */
     public function routingKey();
 }

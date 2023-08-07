@@ -50,7 +50,7 @@ class Syncer
     {
         $syncableAttributes = $model->exists() ?
             $model->getTableSyncableAttributes() :
-            $model->getTableSyncableDeletedAttributes();
+            $model->getTableSyncableDestroyAttributes();
 
         return array_merge($this->pkAttributes($model), $syncableAttributes);
     }

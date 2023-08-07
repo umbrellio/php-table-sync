@@ -20,7 +20,7 @@ trait TableSyncable
         return $this->getAttributes();
     }
 
-    public function getTableSyncableDeletedAttributes(): array
+    public function getTableSyncableDestroyAttributes(): array
     {
         return [];
     }

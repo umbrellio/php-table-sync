@@ -29,7 +29,7 @@ interface SyncableModel
     /**
      * @return array
      */
-    public function getTableSyncableDeletedAttributes();
+    public function getTableSyncableDestroyAttributes();
 
     /**
      * @return string

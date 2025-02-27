@@ -19,7 +19,7 @@
         "php-amqplib/php-amqplib": "^3.0",
         "laravel/framework": "^10.0|^11.0",
         "thecodingmachine/safe": "^2.0",
-        "umbrellio/laravel-heavy-jobs": "^4.0",
+        "umbrellio/laravel-heavy-jobs": "^3.4",
         "monolog/monolog": "^3.0",
         "influxdb/influxdb-php": "^1.15"
     },

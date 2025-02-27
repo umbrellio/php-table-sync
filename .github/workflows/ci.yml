@@ -138,6 +138,7 @@ jobs:
             ./vendor/bin/phpunit --stderr
           fi
         working-directory: './'
+        if: ${{ !(matrix.laravel == '^11' && matrix.php_versions == '8.1') }}
       - name: 'Upload coverage results to Coveralls'
         if: ${{ !matrix.experimental && matrix.coverage }}
         env:

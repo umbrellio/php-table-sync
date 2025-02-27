@@ -140,7 +140,7 @@ jobs:
         working-directory: './'
         if: ${{ !(matrix.laravel == '^11' && matrix.php_versions == '8.1') }}
       - name: 'Upload coverage results to Coveralls'
-        if: ${{ !matrix.experimental && matrix.coverage }}
+        if: ${{ !matrix.experimental && matrix.coverage && !(matrix.laravel == '^11' && matrix.php_versions == '8.1') }}
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COVERALLS_PARALLEL: true

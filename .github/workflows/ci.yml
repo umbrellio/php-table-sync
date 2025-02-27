@@ -72,15 +72,15 @@ jobs:
         experimental: [false]
         operating_system: [ubuntu-latest]
         postgres: ['11', '12', '13', '14', '15']
-        laravel: ['^10', '^11']
+        laravel: ['^10']
         php_versions: ['8.1', '8.2']
         include:
-          - laravel: '^10'
-            php_versions: '8.1'
-          - laravel: '^10'
+          - operating_system: 'ubuntu-latest'
             php_versions: '8.2'
-          - laravel: '^11'
-            php_versions: '8.2'
+            laravel: '^11.0'
+          - operating_system: 'ubuntu-latest'
+            php_versions: '8.3'
+            laravel: '^11.0'
     runs-on: '${{ matrix.operating_system }}'
     services:
       postgres:

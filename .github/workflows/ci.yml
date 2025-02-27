@@ -76,9 +76,15 @@ jobs:
         php_versions: ['8.1', '8.2']
         include:
           - operating_system: 'ubuntu-latest'
+            coverage: [true]
+            experimental: [false]
+            postgres: '15'
             php_versions: '8.2'
             laravel: '^11.0'
           - operating_system: 'ubuntu-latest'
+            coverage: [true]
+            experimental: [false]
+            postgres: '15'
             php_versions: '8.3'
             laravel: '^11.0'
     runs-on: '${{ matrix.operating_system }}'

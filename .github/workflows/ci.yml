@@ -87,6 +87,18 @@ jobs:
             postgres: '15'
             php_versions: '8.3'
             laravel: '^11.0'
+          - operating_system: 'ubuntu-latest'
+            coverage: [true]
+            experimental: [false]
+            postgres: '15'
+            php_versions: '8.3'
+            laravel: '^12.0'
+          - operating_system: 'ubuntu-latest'
+            coverage: [true]
+            experimental: [false]
+            postgres: '15'
+            php_versions: '8.4'
+            laravel: '^12.0'
     runs-on: '${{ matrix.operating_system }}'
     services:
       postgres:

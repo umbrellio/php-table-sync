@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Umbrellio\TableSync\Tests\functional\Laravel\Integration\Console;
 
 use org\bovigo\vfs\vfsStream;
+use PHPUnit\Framework\Attributes\Test;
 use Umbrellio\TableSync\Integration\Laravel\Console\PidManager;
 use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
-use PHPUnit\Framework\Attributes\Test;
 
 class PidManagerTest extends LaravelTestCase
 {

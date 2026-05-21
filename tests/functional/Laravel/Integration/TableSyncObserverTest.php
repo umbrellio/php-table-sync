@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Tests\functional\Laravel\Integration;
 
+use PHPUnit\Framework\Attributes\Test;
 use Umbrellio\TableSync\Messages\PublishMessage;
 use Umbrellio\TableSync\Publisher;
 use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
@@ -11,7 +12,6 @@ use Umbrellio\TableSync\Tests\functional\Laravel\Models\SoftTestModel;
 use Umbrellio\TableSync\Tests\functional\Laravel\Models\TestModel;
 use Umbrellio\TableSync\Tests\functional\Laravel\Models\TestModelWithExceptedFields;
 use Umbrellio\TableSync\Tests\functional\Laravel\Traits\SpyPublisher;
-use PHPUnit\Framework\Attributes\Test;
 
 class TableSyncObserverTest extends LaravelTestCase
 {

@@ -6,12 +6,12 @@ namespace Umbrellio\TableSync\Tests\unit\Rabbit;
 
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPTable;
+use PHPUnit\Framework\Attributes\Test;
 use Umbrellio\TableSync\Messages\PublishMessage;
 use Umbrellio\TableSync\Rabbit\Config\PublishMessage as Config;
 use Umbrellio\TableSync\Rabbit\MessageBuilder;
 use Umbrellio\TableSync\Tests\_data\Traits\MicrotimeFunctionMockTrait;
 use Umbrellio\TableSync\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\Test;
 
 class MessageBuilderTest extends UnitTestCase
 {

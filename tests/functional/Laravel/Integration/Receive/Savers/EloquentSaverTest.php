@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Umbrellio\TableSync\Tests\functional\Laravel\Integration\Receive\Savers;
 
 use Illuminate\Support\Facades\Config;
+use PHPUnit\Framework\Attributes\Test;
 use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\EloquentSaver;
 use Umbrellio\TableSync\Tests\functional\Laravel\Models\TestModel;
-use PHPUnit\Framework\Attributes\Test;
 
 class EloquentSaverTest extends SaverTestCase
 {

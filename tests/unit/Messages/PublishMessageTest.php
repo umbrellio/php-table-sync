@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Tests\unit\Messages;
 
+use PHPUnit\Framework\Attributes\Test;
 use Umbrellio\TableSync\Messages\PublishMessage;
 use Umbrellio\TableSync\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\Test;
 
 class PublishMessageTest extends UnitTestCase
 {

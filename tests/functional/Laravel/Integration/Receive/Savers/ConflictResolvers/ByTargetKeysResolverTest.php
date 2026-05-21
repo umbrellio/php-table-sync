@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Umbrellio\TableSync\Tests\functional\Laravel\Integration\Receive\Savers\ConflictResolvers;
 
 use Illuminate\Support\Facades\App;
+use PHPUnit\Framework\Attributes\Test;
 use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageData;
 use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\ConflictResolvers\ByTargetKeysResolver;
 use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\QuerySaver;
 use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
-use PHPUnit\Framework\Attributes\Test;
 
 class ByTargetKeysResolverTest extends LaravelTestCase
 {

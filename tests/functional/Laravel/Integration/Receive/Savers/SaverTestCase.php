@@ -6,12 +6,12 @@ namespace Umbrellio\TableSync\Tests\functional\Laravel\Integration\Receive\Saver
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Framework\Attributes\Test;
 use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageData;
 use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\Saver;
 use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
 use Umbrellio\TableSync\Tests\functional\Laravel\Models\TestModel;
 use Umbrellio\TableSync\Tests\functional\Laravel\Traits\StubPublisher;
-use PHPUnit\Framework\Attributes\Test;
 
 abstract class SaverTestCase extends LaravelTestCase
 {

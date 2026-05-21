@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Tests\unit\Rabbit\Config;
 
+use PHPUnit\Framework\Attributes\Test;
 use Umbrellio\TableSync\Rabbit\Config\Consumer as Config;
 use Umbrellio\TableSync\ReceivedMessageHandler;
 use Umbrellio\TableSync\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\Test;
 
 class ReceiveTest extends UnitTestCase
 {

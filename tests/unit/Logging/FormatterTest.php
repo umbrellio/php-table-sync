@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use InfluxDB\Point;
 use Monolog\Level;
 use Monolog\LogRecord;
+use PHPUnit\Framework\Attributes\Test;
 use Umbrellio\TableSync\Messages\PublishMessage;
 use Umbrellio\TableSync\Monolog\Formatter\InfluxDBFormatter;
 use Umbrellio\TableSync\Monolog\Formatter\JsonTableSyncFormatter;
@@ -17,7 +18,6 @@ use Umbrellio\TableSync\Rabbit\Config\PublishMessage as Config;
 use Umbrellio\TableSync\Rabbit\MessageBuilder;
 use Umbrellio\TableSync\Tests\_data\Traits\MicrotimeFunctionMockTrait;
 use Umbrellio\TableSync\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\Test;
 
 class FormatterTest extends UnitTestCase
 {

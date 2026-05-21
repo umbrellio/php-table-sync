@@ -7,12 +7,11 @@ namespace Umbrellio\TableSync\Tests\unit\Rabbit\Config;
 use Umbrellio\TableSync\Rabbit\Config\Consumer as Config;
 use Umbrellio\TableSync\ReceivedMessageHandler;
 use Umbrellio\TableSync\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class ReceiveTest extends UnitTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function parametersFromConstructor(): void
     {
         $handler = $this->createMock(ReceivedMessageHandler::class);

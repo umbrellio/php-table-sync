@@ -7,15 +7,14 @@ namespace Umbrellio\TableSync\Tests\functional\Laravel\Integration\Receive\Saver
 use Illuminate\Support\Facades\Config;
 use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\EloquentSaver;
 use Umbrellio\TableSync\Tests\functional\Laravel\Models\TestModel;
+use PHPUnit\Framework\Attributes\Test;
 
 class EloquentSaverTest extends SaverTestCase
 {
     protected const TARGET = TestModel::class;
     protected const SAVER = EloquentSaver::class;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function upsertByDuplicatedTargetKeys(): void
     {
         $this->dropPrimaryKeyConstraint();
@@ -44,9 +43,7 @@ class EloquentSaverTest extends SaverTestCase
             });
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testUpsertWithChunk(): void
     {
         $this->dropPrimaryKeyConstraint();
@@ -81,9 +78,7 @@ class EloquentSaverTest extends SaverTestCase
         $this->assertDatabaseMissing(static::TARGET, $item3);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testDestroyWithChunk(): void
     {
         $this->dropPrimaryKeyConstraint();

@@ -7,12 +7,11 @@ namespace Umbrellio\TableSync\Tests\unit\Rabbit\Config;
 use PhpAmqpLib\Wire\AMQPTable;
 use Umbrellio\TableSync\Rabbit\Config\PublishMessage as Config;
 use Umbrellio\TableSync\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class MessageTest extends UnitTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function parametersFromConstructor(): void
     {
         $amqpTable = new AMQPTable([]);

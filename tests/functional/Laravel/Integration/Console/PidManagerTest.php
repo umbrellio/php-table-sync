@@ -7,6 +7,7 @@ namespace Umbrellio\TableSync\Tests\functional\Laravel\Integration\Console;
 use org\bovigo\vfs\vfsStream;
 use Umbrellio\TableSync\Integration\Laravel\Console\PidManager;
 use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class PidManagerTest extends LaravelTestCase
 {
@@ -17,9 +18,7 @@ class PidManagerTest extends LaravelTestCase
         vfsStream::setup('testDir');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function managing(): void
     {
         $manager = new PidManager(vfsStream::path('test_file'));

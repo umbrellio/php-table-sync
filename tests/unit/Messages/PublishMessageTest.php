@@ -6,12 +6,11 @@ namespace Umbrellio\TableSync\Tests\unit\Messages;
 
 use Umbrellio\TableSync\Messages\PublishMessage;
 use Umbrellio\TableSync\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class PublishMessageTest extends UnitTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function parametersFromConstructor(): void
     {
         $message = new PublishMessage('class', 'event', 'test_key', [
@@ -24,9 +23,7 @@ class PublishMessageTest extends UnitTestCase
         $this->assertSame('test_key', $message->routingKey());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detectIfDestroyed(): void
     {
         $message = new PublishMessage('class', 'event', 'test_key');
@@ -36,9 +33,7 @@ class PublishMessageTest extends UnitTestCase
         $this->assertTrue($message->isDestroyed());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detectIfCreated(): void
     {
         $message = new PublishMessage('class', 'event', 'test_key');

@@ -9,12 +9,11 @@ use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageData;
 use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\ConflictResolvers\ByTargetKeysResolver;
 use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\QuerySaver;
 use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class ByTargetKeysResolverTest extends LaravelTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function correctConditionResolved(): void
     {
         $resolver = new ByTargetKeysResolver();

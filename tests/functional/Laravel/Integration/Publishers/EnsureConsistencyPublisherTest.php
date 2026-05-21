@@ -10,6 +10,7 @@ use Umbrellio\TableSync\Publisher;
 use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
 use Umbrellio\TableSync\Tests\functional\Laravel\Models\TestModel;
 use Umbrellio\TableSync\Tests\functional\Laravel\Traits\SpyPublisher;
+use PHPUnit\Framework\Attributes\Test;
 
 class EnsureConsistencyPublisherTest extends LaravelTestCase
 {
@@ -31,9 +32,7 @@ class EnsureConsistencyPublisherTest extends LaravelTestCase
         });
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function simplePublish(): void
     {
         $this->spyPublisher->shouldSkip = true;
@@ -48,9 +47,7 @@ class EnsureConsistencyPublisherTest extends LaravelTestCase
         $this->assertNotEmpty($this->spyPublisher->messages);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function notPublishIfRecordNotExistsAndNotDestroyed(): void
     {
         $publisher = new EnsureConsistencyPublisher($this->spyPublisher);

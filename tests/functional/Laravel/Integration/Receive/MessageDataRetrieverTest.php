@@ -10,12 +10,11 @@ use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageDataRetri
 use Umbrellio\TableSync\Messages\ReceivedMessage;
 use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
 use Umbrellio\TableSync\Tests\functional\Laravel\Models\TestModel;
+use PHPUnit\Framework\Attributes\Test;
 
 class MessageDataRetrieverTest extends LaravelTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function exceptionIfNoConfig(): void
     {
         $retriever = new MessageDataRetriever([]);
@@ -26,9 +25,7 @@ class MessageDataRetrieverTest extends LaravelTestCase
         $retriever->retrieve($message);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function exceptionIfNoTableAndModel(): void
     {
         $retriever = new MessageDataRetriever([
@@ -41,9 +38,7 @@ class MessageDataRetrieverTest extends LaravelTestCase
         $retriever->retrieve($message);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function exceptionIfHasBothTableAndModel(): void
     {
         $retriever = new MessageDataRetriever([
@@ -59,9 +54,7 @@ class MessageDataRetrieverTest extends LaravelTestCase
         $retriever->retrieve($message);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function exceptionIfPassedModelIsNotModelSubclass(): void
     {
         $retriever = new MessageDataRetriever([
@@ -76,9 +69,7 @@ class MessageDataRetrieverTest extends LaravelTestCase
         $retriever->retrieve($message);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function exceptionIfNoTargetKeys(): void
     {
         $retriever = new MessageDataRetriever([
@@ -93,25 +84,19 @@ class MessageDataRetrieverTest extends LaravelTestCase
         $retriever->retrieve($message);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function retrieveByTable(): void
     {
         $this->assertRetrieved('table', 'test_models');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function retrieveByModel(): void
     {
         $this->assertRetrieved('model', TestModel::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function additionalDataHandler(): void
     {
         $retriever = new MessageDataRetriever([
@@ -141,9 +126,7 @@ class MessageDataRetrieverTest extends LaravelTestCase
         ], $data->getData());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function overrideData(): void
     {
         $retriever = new MessageDataRetriever([

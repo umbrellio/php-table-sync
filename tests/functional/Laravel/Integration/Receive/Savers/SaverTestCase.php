@@ -11,6 +11,7 @@ use Umbrellio\TableSync\Integration\Laravel\Receive\Savers\Saver;
 use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
 use Umbrellio\TableSync\Tests\functional\Laravel\Models\TestModel;
 use Umbrellio\TableSync\Tests\functional\Laravel\Traits\StubPublisher;
+use PHPUnit\Framework\Attributes\Test;
 
 abstract class SaverTestCase extends LaravelTestCase
 {
@@ -28,9 +29,7 @@ abstract class SaverTestCase extends LaravelTestCase
         $this->stubPublisher();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function upsert(): void
     {
         $data = $this->makeMessageData(['id'], [
@@ -91,9 +90,7 @@ abstract class SaverTestCase extends LaravelTestCase
         $this->assertDatabaseHas(static::TARGET, $newRawData);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function nothingIfUpsertWithEmptyData(): void
     {
         $data = $this->makeMessageData([], [], 'not_exist_table');
@@ -101,9 +98,7 @@ abstract class SaverTestCase extends LaravelTestCase
         $this->assertNull($data->upsert(10.1));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy(): void
     {
         /** @var TestModel $testModel */
@@ -118,9 +113,7 @@ abstract class SaverTestCase extends LaravelTestCase
         $this->assertNull($testModel->fresh());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroyBatch(): void
     {
         $models = factory(TestModel::class, 2)->create();
@@ -139,9 +132,7 @@ abstract class SaverTestCase extends LaravelTestCase
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroyWithSomeAttributes(): void
     {
         /** @var TestModel $destroyedModel */
@@ -163,9 +154,7 @@ abstract class SaverTestCase extends LaravelTestCase
         $this->assertNotNull($model->fresh());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function nothingIfDestroyWithEmptyData(): void
     {
         $data = $this->makeMessageData([], [], 'not_exist_table');
@@ -173,9 +162,7 @@ abstract class SaverTestCase extends LaravelTestCase
         $this->assertNull($data->destroy());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroyByDuplicatedTargetKeys(): void
     {
         $this->dropPrimaryKeyConstraint();

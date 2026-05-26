@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Tests\functional\Laravel\Integration;
 
+use PHPUnit\Framework\Attributes\Test;
 use Umbrellio\TableSync\Messages\PublishMessage;
 use Umbrellio\TableSync\Publisher;
 use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
@@ -29,9 +30,7 @@ class TableSyncObserverTest extends LaravelTestCase
         });
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function createdMessagePublished(): void
     {
         /** @var TestModel $model */
@@ -50,9 +49,7 @@ class TableSyncObserverTest extends LaravelTestCase
         ], $message->attributes());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function updatedMessagePublished(): void
     {
         /** @var TestModel $model */
@@ -74,9 +71,7 @@ class TableSyncObserverTest extends LaravelTestCase
         ], $message->attributes());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function deletedMessagePublished(): void
     {
         /** @var TestModel $model */
@@ -92,9 +87,7 @@ class TableSyncObserverTest extends LaravelTestCase
         ], $message->attributes());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function softDeletedMessagePublished(): void
     {
         /** @var SoftTestModel $model */
@@ -114,9 +107,7 @@ class TableSyncObserverTest extends LaravelTestCase
         ], $message->attributes());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function forceDeletedMessagePublished(): void
     {
         /** @var SoftTestModel $model */
@@ -132,9 +123,7 @@ class TableSyncObserverTest extends LaravelTestCase
         ], $message->attributes());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function restoredMessagePublished(): void
     {
         /** @var SoftTestModel $model */
@@ -156,9 +145,7 @@ class TableSyncObserverTest extends LaravelTestCase
         ], $message->attributes());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function modifySyncableAttributes(): void
     {
         /** @var TestModelWithExceptedFields $model */
@@ -177,9 +164,7 @@ class TableSyncObserverTest extends LaravelTestCase
         ], $message->attributes());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function notPublishIfExistsButNotFresh(): void
     {
         $this->spyPublisher->shouldSkip = true;
@@ -198,9 +183,7 @@ class TableSyncObserverTest extends LaravelTestCase
         $this->assertEmpty($this->spyPublisher->messages);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function mustNotObserveIfModelTableSyncDisabled(): void
     {
         TestModel::$isTableSyncEnabled = false;

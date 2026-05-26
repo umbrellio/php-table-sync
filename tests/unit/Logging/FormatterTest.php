@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use InfluxDB\Point;
 use Monolog\Level;
 use Monolog\LogRecord;
+use PHPUnit\Framework\Attributes\Test;
 use Umbrellio\TableSync\Messages\PublishMessage;
 use Umbrellio\TableSync\Monolog\Formatter\InfluxDBFormatter;
 use Umbrellio\TableSync\Monolog\Formatter\JsonTableSyncFormatter;
@@ -29,9 +30,7 @@ class FormatterTest extends UnitTestCase
         $this->mockMicrotime();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function tableSyncFormat(): void
     {
         $this->enableMockMicrotime();
@@ -57,9 +56,7 @@ class FormatterTest extends UnitTestCase
         $this->disableMockMicrotime();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function lineTableSyncFormat(): void
     {
         $lineTableSyncFormatter = new LineTableSyncFormatter();
@@ -68,9 +65,7 @@ class FormatterTest extends UnitTestCase
         $this->assertStringContainsString('message', $format);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function influxDbFormatter(): void
     {
         $influxDBFormatter = new InfluxDBFormatter('measurement', 1);
@@ -80,9 +75,7 @@ class FormatterTest extends UnitTestCase
         $this->assertSame(['model', 'event', 'direction'], array_keys($format[0]->getTags()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function jsonTableSyncFormat(): void
     {
         $jsonTableSyncFormatter = new JsonTableSyncFormatter();

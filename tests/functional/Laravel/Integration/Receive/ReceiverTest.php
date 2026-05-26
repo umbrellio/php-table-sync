@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Tests\functional\Laravel\Integration\Receive;
 
+use PHPUnit\Framework\Attributes\Test;
 use Umbrellio\TableSync\Integration\Laravel\Exceptions\UnknownMessageEvent;
 use Umbrellio\TableSync\Integration\Laravel\Receive\MessageData\MessageDataRetriever;
 use Umbrellio\TableSync\Integration\Laravel\Receive\Receiver;
@@ -12,9 +13,7 @@ use Umbrellio\TableSync\Tests\functional\Laravel\LaravelTestCase;
 
 class ReceiverTest extends LaravelTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function exceptionIfUnknownMessageEvent(): void
     {
         $messageDataRetreiver = $this->createMock(MessageDataRetriever::class);

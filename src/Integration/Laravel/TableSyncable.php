@@ -11,7 +11,9 @@ trait TableSyncable
     public static function bootTableSyncable(): void
     {
         if (static::$isTableSyncEnabled) {
-            static::observe(TableSyncObserver::class);
+            foreach (['created', 'updated', 'deleted'] as $event) {
+                static::registerModelEvent($event, TableSyncObserver::class . '@' . $event);
+            }
         }
     }
 

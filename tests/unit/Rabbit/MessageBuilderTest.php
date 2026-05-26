@@ -6,6 +6,7 @@ namespace Umbrellio\TableSync\Tests\unit\Rabbit;
 
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPTable;
+use PHPUnit\Framework\Attributes\Test;
 use Umbrellio\TableSync\Messages\PublishMessage;
 use Umbrellio\TableSync\Rabbit\Config\PublishMessage as Config;
 use Umbrellio\TableSync\Rabbit\MessageBuilder;
@@ -29,9 +30,7 @@ class MessageBuilderTest extends UnitTestCase
         $this->mockMicrotime();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function bodyVersionDependsByMicroTime(): void
     {
         $this->enableMockMicrotime();
@@ -44,9 +43,7 @@ class MessageBuilderTest extends UnitTestCase
         $this->disableMockMicrotime();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function constantAttributes(): void
     {
         $amqpMessage = $this->builder->buildForPublishing(new PublishMessage('class', 'event', 'test_key'));
@@ -64,9 +61,7 @@ class MessageBuilderTest extends UnitTestCase
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function attributesDependsByConfig(): void
     {
         $table = new AMQPTable([]);
@@ -85,9 +80,7 @@ class MessageBuilderTest extends UnitTestCase
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function bodyEvent(): void
     {
         $amqpMessage = $this->builder->buildForPublishing(new PublishMessage('class', 'event', 'test_key'));
@@ -103,9 +96,7 @@ class MessageBuilderTest extends UnitTestCase
         $this->assertSame('destroy', $body['event']);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function bodyMeta(): void
     {
         $amqpMessage = $this->builder->buildForPublishing(new PublishMessage('class', 'event', 'test_key'));
@@ -121,9 +112,7 @@ class MessageBuilderTest extends UnitTestCase
         $this->assertTrue($body['metadata']['created']);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function bodyAttributesByMessage(): void
     {
         $amqpMessage = $this->builder->buildForPublishing(
@@ -139,9 +128,7 @@ class MessageBuilderTest extends UnitTestCase
         ], $body['attributes']);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function bodyKeys(): void
     {
         $amqpMessage = $this->builder->buildForPublishing(

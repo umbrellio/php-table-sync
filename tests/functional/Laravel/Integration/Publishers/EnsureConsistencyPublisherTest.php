@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Umbrellio\TableSync\Tests\functional\Laravel\Integration\Publishers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Umbrellio\TableSync\Integration\Laravel\Publishers\EnsureConsistencyPublisher;
 use Umbrellio\TableSync\Messages\PublishMessage;
 use Umbrellio\TableSync\Publisher;
@@ -31,9 +32,7 @@ class EnsureConsistencyPublisherTest extends LaravelTestCase
         });
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function simplePublish(): void
     {
         $this->spyPublisher->shouldSkip = true;
@@ -48,9 +47,7 @@ class EnsureConsistencyPublisherTest extends LaravelTestCase
         $this->assertNotEmpty($this->spyPublisher->messages);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function notPublishIfRecordNotExistsAndNotDestroyed(): void
     {
         $publisher = new EnsureConsistencyPublisher($this->spyPublisher);
